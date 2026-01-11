@@ -3,6 +3,7 @@
 [![Version](https://img.shields.io/badge/version-1.0-green.svg)](https://github.com/YourRepo/TaxaScope)
 [![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](https://github.com/YourRepo/TaxaScope)
 [![License](https://img.shields.io/badge/license-Academic%20Use-orange.svg)](LICENSE)
+
 Korean Collection for Type Cultures (KCTC), Korea Research Institute of Bioscience and Biotechnology (KRIBB)
 
 TaxaScope is an integrated, GUI-driven bioinformatics toolkit designed for microbial genome analysis within the Windows ecosystem. Developed at **KRIBB-KCTC**, it aims to bridge the gap between complex command-line workflows and user-friendly research applications.
