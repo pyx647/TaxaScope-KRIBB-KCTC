@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-Academic%20Use-orange.svg)](LICENSE)
 
 TaxaScope is an integrated, GUI-driven bioinformatics toolkit designed for microbial genome analysis within the Windows ecosystem. Developed at **KRIBB-KCTC**, it aims to bridge the gap between complex command-line workflows and user-friendly research applications.
-<img width="1895" height="948" alt="image" src="https://github.com/user-attachments/assets/ddf4aec7-a667-4953-a894-e39a2be3c756" />
+<img width="1916" height="1029" alt="image" src="https://github.com/user-attachments/assets/69093f22-e0cb-4a13-b01a-d653ad878088" />
 Figure 1. TaxaScope Architecture. The system operates on a four-layer model:
 User Interface (Layer 1): Provides a rigorous GUI for parameter tuning and results visualization.
 Orchestration Engine (Layer 2): Manages task scheduling and resource allocation across the host system.
