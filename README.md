@@ -12,6 +12,12 @@ User Interface (Layer 1): Provides a rigorous GUI for parameter tuning and resul
 Orchestration Engine (Layer 2): Manages task scheduling and resource allocation across the host system.
 Analysis Core (Layer 3): Executes bioinformatic tools (e.g., Prokka, antiSMASH) within isolated micro-kernels (containers) to ensure reproducibility.
 Infrastructure (Layer 4): Handles data I/O and hardware interaction seamlessly.
+
+<img width="1559" height="839" alt="image" src="https://github.com/user-attachments/assets/21561197-8135-4b02-a4c6-16eff4602111" />
+Figure 2. Graphical user interface of TaxaScope for batch genome analysis.
+The TaxaScope graphical user interface provides a file-system–based workflow for configuring and executing prokaryotic genome analyses. The left panel displays the working directory and detected input files. The central panel allows users to select and combine analysis modules into a batch workflow, including genome statistics, annotation, quality assessment, phylogeny, and functional mining. The right panel presents real-time execution status and progress monitoring, as well as a live preview of the analysis results. This interface abstracts containerized execution and resource management, enabling guided, no–command-line analysis on local desktop systems.
+
+
 ## 🚀 Key Features
 - **One-Click Analysis**: Automated workflows for Prokka, BUSCO, CheckM2, dbCAN, antiSMASH, and ANI/AAI.
 - **NCBI Data Fetcher**: Integrated module to batch download genomes from NCBI using GCA/GCF accessions.
