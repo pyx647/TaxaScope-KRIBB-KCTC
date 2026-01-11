@@ -2,7 +2,7 @@
 
 ## Software Information
 - **Software Name**: TaxaScope (KRIBB-KCTC Bioinformatics Toolkit)
-- **Version**: 1.1
+- **Version**: 1.0
 - **Platform**: Windows 10/11 (via WSL2 and Podman/Docker)
 - **Programming Language**: Python 3.10+ (GUI: CustomTkinter)
 - **Containerization**: Podman/Docker (Linux-based microbial analysis images)
@@ -17,3 +17,4 @@ TaxaScope is designed with 'Container-based Reproducibility' as a core principle
 
 ## Contact
 For software-related inquiries or technical support, please contact the corresponding author(s) at [Author Email].
+
