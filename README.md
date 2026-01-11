@@ -1,6 +1,6 @@
 # TaxaScope (KRIBB-KCTC Bioinformatics Toolkit)
 
-[![Version](https://img.shields.io/badge/version-1.1-green.svg)](https://github.com/YourRepo/TaxaScope)
+[![Version](https://img.shields.io/badge/version-1.0-green.svg)](https://github.com/YourRepo/TaxaScope)
 [![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](https://github.com/YourRepo/TaxaScope)
 [![License](https://img.shields.io/badge/license-Academic%20Use-orange.svg)](LICENSE)
 
