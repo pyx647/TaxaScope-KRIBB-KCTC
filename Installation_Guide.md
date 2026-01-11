@@ -3,7 +3,7 @@
 TaxaScope is designed to be a "Zero-Install" bioinformatics platform for the Windows environment. It leverages WSL2 and Podman to provide a consistent analysis environment without requiring manual installation of bioinformatics software on the host OS.
 
 ## System Requirements
-- **OS**: Windows 10 (Build 19041+) or Windows 11(recommended).
+- **OS**: Windows 11(recommended).
 - **CPU**: 4+ Cores recommended.
 - **RAM**: 16GB+ (32GB+ recommended for antiSMASH/CheckM2).
 - **Disk**: 50GB+ free space (for Docker images and databases).
@@ -25,3 +25,4 @@ To verify the installation:
 1. Run the **"Genome Stats"** module on the provided example FASTA file.
 2. If the progress bar completes and results appear in the "Preview" tab, the local Python environment is functional.
 3. Run **"Prokka"** to verify the container runtime is correctly configured.
+
