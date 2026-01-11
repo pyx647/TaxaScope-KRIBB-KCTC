@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/license-Academic%20Use-orange.svg)](LICENSE)
 
 TaxaScope is an integrated, GUI-driven bioinformatics toolkit designed for microbial genome analysis within the Windows ecosystem. Developed at **KRIBB-KCTC**, it aims to bridge the gap between complex command-line workflows and user-friendly research applications.
+<img width="1895" height="948" alt="image" src="https://github.com/user-attachments/assets/ddf4aec7-a667-4953-a894-e39a2be3c756" />
 
 ## 🚀 Key Features
 - **One-Click Analysis**: Automated workflows for Prokka, BUSCO, CheckM2, dbCAN, antiSMASH, and ANI/AAI.
