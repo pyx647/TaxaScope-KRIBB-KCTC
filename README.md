@@ -7,6 +7,7 @@
 Korean Collection for Type Cultures (KCTC), Korea Research Institute of Bioscience and Biotechnology (KRIBB)
 
 TaxaScope is an integrated, GUI-driven bioinformatics toolkit designed for microbial genome analysis within the Windows ecosystem. Developed at **KRIBB-KCTC**, it aims to bridge the gap between complex command-line workflows and user-friendly research applications.
+
 <img width="1916" height="1029" alt="image" src="https://github.com/user-attachments/assets/69093f22-e0cb-4a13-b01a-d653ad878088" />
 Figure 1. TaxaScope Architecture. The system operates on a four-layer model:
 User Interface (Layer 1): Provides a rigorous GUI for parameter tuning and results visualization.
