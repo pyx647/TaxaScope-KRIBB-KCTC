@@ -8,16 +8,6 @@ Korean Collection for Type Cultures (KCTC), Korea Research Institute of Bioscien
 
 TaxaScope is an integrated, GUI-driven bioinformatics toolkit designed for microbial genome analysis within the Windows ecosystem. Developed at **KRIBB-KCTC**, it aims to bridge the gap between complex command-line workflows and user-friendly research applications.
 
-<img width="1916" height="1029" alt="image" src="https://github.com/user-attachments/assets/69093f22-e0cb-4a13-b01a-d653ad878088" />
-Figure 1. TaxaScope Architecture. The system operates on a four-layer model:
-User Interface (Layer 1): Provides a rigorous GUI for parameter tuning and results visualization.
-Orchestration Engine (Layer 2): Manages task scheduling and resource allocation across the host system.
-Analysis Core (Layer 3): Executes bioinformatic tools (e.g., Prokka, antiSMASH) within isolated micro-kernels (containers) to ensure reproducibility.
-Infrastructure (Layer 4): Handles data I/O and hardware interaction seamlessly.
-
-<img width="1559" height="839" alt="image" src="https://github.com/user-attachments/assets/21561197-8135-4b02-a4c6-16eff4602111" />
-Figure 2. Graphical user interface of TaxaScope for batch genome analysis.
-The TaxaScope graphical user interface provides a file-system–based workflow for configuring and executing prokaryotic genome analyses. The left panel displays the working directory and detected input files. The central panel allows users to select and combine analysis modules into a batch workflow, including genome statistics, annotation, quality assessment, phylogeny, and functional mining. The right panel presents real-time execution status and progress monitoring, as well as a live preview of the analysis results. This interface abstracts containerized execution and resource management, enabling guided, no–command-line analysis on local desktop systems.
 
 
 ## 🚀 Key Features
@@ -45,6 +35,18 @@ TaxaScope uses a 4-layer architecture to ensure stability and reproducibility:
 | **BUSCO** | Lineage-specific Completeness Check |
 | **PhyloPhlAn** | Core-Gene Phylogeny |
 | **Get Data** | Batch NCBI Genome Downloader (via Datasets API) |
+
+<img width="1916" height="1029" alt="image" src="https://github.com/user-attachments/assets/69093f22-e0cb-4a13-b01a-d653ad878088" />
+Figure 1. TaxaScope Architecture. The system operates on a four-layer model:
+User Interface (Layer 1): Provides a rigorous GUI for parameter tuning and results visualization.
+Orchestration Engine (Layer 2): Manages task scheduling and resource allocation across the host system.
+Analysis Core (Layer 3): Executes bioinformatic tools (e.g., Prokka, antiSMASH) within isolated micro-kernels (containers) to ensure reproducibility.
+Infrastructure (Layer 4): Handles data I/O and hardware interaction seamlessly.
+
+<img width="1559" height="839" alt="image" src="https://github.com/user-attachments/assets/21561197-8135-4b02-a4c6-16eff4602111" />
+Figure 2. Graphical user interface of TaxaScope for batch genome analysis.
+The TaxaScope graphical user interface provides a file-system–based workflow for configuring and executing prokaryotic genome analyses. The left panel displays the working directory and detected input files. The central panel allows users to select and combine analysis modules into a batch workflow, including genome statistics, annotation, quality assessment, phylogeny, and functional mining. The right panel presents real-time execution status and progress monitoring, as well as a live preview of the analysis results. This interface abstracts containerized execution and resource management, enabling guided, no–command-line analysis on local desktop systems.
+
 
 ## 📦 Getting Started
 1. Download the [Latest Release](URL).
