@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxaScope KRIBB-KCTC User Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b8ed0;
+            --primary-dark: #2c6da1;
+            --bg: #f5f7fa;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #1a1a1b;
+            --text-secondary: #4a4a4e;
+            --accent: #00b2ff;
+            --border: #e1e4e8;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            background: #eee;
+            padding: 4px;
+            border-radius: 100px;
+            gap: 2px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-secondary);
+        }
+
+        .lang-btn.active {
+            background: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            color: var(--primary);
+        }
+
+        /* --- Main Content Layout --- */
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- Markdown Styling --- */
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-dark);
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bg);
+            color: var(--text-main);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: #f0f2f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        /* --- Alerts --- */
+        .alert {
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border-left: 5px solid;
+            background: #f8f9fa;
+        }
+
+        .alert-important {
+            border-color: #d73a49;
+            background: #fff5f5;
+            color: #b91c1c;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Custom UI elements --- */
+        .tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .sidebar-item {
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background: #f0f0f0;
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .authors {
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M20 7L12 12L4 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            TaxaScope KRIBB-KCTC Guide
+        </div>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="ko">한국어</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <!-- CHINESE SECTION -->
+            <div id="zh" class="content-section active">
+                <h1>TaxaScope KRIBB-KCTC 用户指南</h1>
+                <p>欢迎使用 <strong>TaxaScope KRIBB-KCTC</strong>！本手册将引导您完成从环境安装到执行生物信息学分析的全过程。</p>
+
+                <hr>
+
+                <h2>1. 软件概述</h2>
+                <p>TaxaScope KRIBB-KCTC 是一个基于 Windows 的图形化工具箱，旨在简化复杂的生物信息学分析流程。</p>
+                <ul>
+                    <li><strong>离线运行</strong>：支持导入预打包的镜像，无需持续联网。</li>
+                    <li><strong>原生体验</strong>：提供简单的点击式界面，无需记忆复杂的 Linux 命令。</li>
+                </ul>
+
+                <hr>
+
+                <h2>2. 环境安装 (第一次使用必看)</h2>
+                <p>根据您的操作系统版本，安装步骤略有不同：</p>
+
+                <h3>Windows 11 用户</h3>
+                <ol>
+                    <li>打开软件，直接点击右上角的 <code>"⚙️ Env Setup"</code> 按钮。</li>
+                    <li><strong>关键步骤</strong>：安装完成后，请务必 <strong>重启电脑</strong>。</li>
+                </ol>
+
+                <h3>Windows 10 用户 (版本 1903+)</h3>
+                <p>由于 Windows 10 的 WSL2 内核需要手动更新，请按照以下步骤操作：</p>
+                <ol>
+                    <li>点击 <code>"🔧 Win10 WSL2"</code> 按钮</li>
+                    <li><strong>关键步骤</strong>：完成后请务必 <strong>重启电脑</strong>。</li>
+                </ol>
+
+                <div class="alert alert-important">
+                    <div class="alert-title">⚠️ IMPORTANT</div>
+                    <p><strong>重启是必须的！</strong> 只有重启后，Windows 才能激活虚拟化平台。</p>
+                </div>
+
+                <hr>
+
+                <h2>3. 分析准备 (镜像导入)</h2>
+                <p>软件中的分析工具是以容器镜像形式运行的，您可以根据自己的网络情况选择加载方式：</p>
+
+                <h3>方式 A：离线手动导入 (推荐网络受限用户)</h3>
+                <ol>
+                    <li>如果您已经拥有预打包的 <code>.tar</code> 镜像文件（通常存放在 <code>TaxaScope_Images/</code> 文件夹下）。</li>
+                    <li>在软件界面点击 <code>"📥 Import Images"</code> 按钮并选择该文件。</li>
+                    <li>程序会自动将其导入 Podman 引擎。</li>
+                </ol>
+
+                <h3>方式 B：在线自动下载 (推荐拥有国际互联网连接的用户)</h3>
+                <ol>
+                    <li>如果您可以顺畅访问国外网络（Docker Hub），则<strong>无需手动导入</strong>。</li>
+                    <li>直接点击对应工具页面的运行按钮，系统会自动从云端下载所需镜像。</li>
+                    <li><strong>注意</strong>：首次运行时的下载过程可能较长，具体取决于您的带宽。</li>
+                </ol>
+
+                <hr>
+
+                <h2>4. 日常使用流程</h2>
+
+                <h3>第一步：开启后台 (自动/手动)</h3>
+                <ul>
+                    <li><strong>自动</strong>：现在软件启动时会自动检查并尝试运行 <code>podman machine start</code>。</li>
+                    <li><strong>手动</strong>：如果自动启动失败，可以点击 <code>"💻 VM Config"</code> 重新配置并启动。</li>
+                    <li><strong>低性能模式 (Low Perf Mode)</strong>：位于界面右上角。开启后会限制容器使用的 CPU 核心数，防止旧电脑或配置较低的系统在分析时出现完全卡死的情况。
+                    </li>
+                </ul>
+
+                <h3>第二步：选择工作目录</h3>
+                <ol>
+                    <li>点击 <code>"📂 Select Work Directory"</code> 选择您的数据所在的文件夹。</li>
+                    <li>左侧的 <code>"File Browser"</code> 会立即加载该目录下的文件。</li>
+                </ol>
+
+                <h3>第三步：运行分析 (单工具或批量)</h3>
+                <ul>
+                    <li><strong>单工具运行</strong>：在顶部的标签页中选择工具，配置参数后点击底部按钮。
+                        <ul>
+                            <li><strong>dbCAN2 选项</strong>：建议至少勾选两种方法（HMMER, DIAMOND, dbCAN-sub）以获得更可靠的预测结果。</li>
+                            <li><strong>CHECKM2 选项</strong>：小于等于16g内存，建议打开低性能模式作者信息附近的开关。</li>
+                            <li><strong>antiSMASH 选项</strong>：
+                                <ul>
+                                    <li>Strictness: 默认为 <code>relaxed</code>。</li>
+                                    <li>High Memory 特性: 部分功能（如 ClusterBlast）建议在内存大于等于 32GB 的机器上开启。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>批量运行 (Batch Analysis)</strong>：
+                        <ol>
+                            <li>切换到 <code>"Batch Analysis"</code> 标签页。</li>
+                            <li>勾选您想要依次运行的所有工具（如 Prokka + dbCAN + CheckM2）。</li>
+                            <li>勾选 <code>"📊 Generate Full Report (HTML)"</code> 以在完成后生成汇总报告。</li>
+                            <li>点击底部的 <code>"▶ Run Selected Tools"</code>。</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <h3>第四步：监控与查看报告</h3>
+                <ul>
+                    <li><strong>Monitor 标签页</strong>：查看当前运行时间、工具队列和运行状态。</li>
+                    <li><strong>交互式报告 (Batch Report)</strong>：
+                        <ol>
+                            <li>批量运行结束后，软件会自动在默认浏览器中打开一个 <code>.html</code> 格式的汇总报告。</li>
+                            <li>报告集成了所有工具的图表、结果预览和质量评价。</li>
+                            <li>该报告支持点击放大图片，并可在不同工具的 Tab 之间切换。</li>
+                        </ol>
+                    </li>
+                    <li><strong>Preview 标签页</strong>：分析完成后，单个结果文件也可以在这里预览。</li>
+                </ul>
+
+                <hr>
+
+                <h2>5. 退出软件</h2>
+                <p>为了保护您的系统资源，退出时会有提示：</p>
+                <ul>
+                    <li><strong>选择“是”</strong>：立即执行 <code>wsl --shutdown</code>。这会彻底释放 WSL 占用的内存（有时多达数 GB），但下次打开软件会稍慢,
+                        需要等待 ✅Env Ready 再开始操作。</li>
+                    <li><strong>选择“否”</strong>：直接退出 UI。WSL 后台保持运行，方便您下次秒速启动分析。</li>
+                </ul>
+
+                <hr>
+
+                <h2>6. 常见问题 (FAQ)</h2>
+                <p><strong>Q: 运行分析时提示 "Cannot connect to Podman"？</strong></p>
+                <p>A: 这通常是因为 WSL 后台没启动。尝试点击 <code>"VM Config"</code> 或重启软件。</p>
+                <p><strong>Q: 磁盘空间不足？</strong></p>
+                <p>A: 生物信息学镜像占用很大。您可以在不再需要某个工具时，点击工具页下方的 <code>"🗑️ Uninstall [工具名] (Free Space)"</code>。</p>
+                <p><strong>Q: 想要自定义内存和 CPU 分配？</strong></p>
+                <p>A: 点击 <code>"VM Config"</code>。默认会自动分配系统 70% 的内存和 75% 的 CPU 核心，以保证分析效率。</p>
+                <p><strong>Q: 软件运行中卡死了怎么办？</strong></p>
+                <p>A: 点击最底部的红色按钮 <code>"⏹ Stop Current Task"</code>。这会尝试强制终止所有正在运行的功能。</p>
+
+                <footer>
+                    制作：<span class="authors">PENG YUXIN & JIANG YUE</span>
+                </footer>
+            </div>
+
+            <!-- ENGLISH SECTION -->
+            <div id="en" class="content-section">
+                <h1>TaxaScope KRIBB-KCTC User Guide</h1>
+                <p>Welcome to <strong>TaxaScope KRIBB-KCTC</strong>! This manual will guide you through the entire
+                    process from environment setup to executing bioinformatics analyses.</p>
+
+                <hr>
+
+                <h2>1. Software Overview</h2>
+                <p>TaxaScope KRIBB-KCTC is a Windows-based graphical toolbox designed to simplify complex bioinformatics
+                    workflows.</p>
+                <ul>
+                    <li><strong>Offline Operation</strong>: Supports importing pre-packaged images without requiring
+                        constant internet access.</li>
+                    <li><strong>Native Experience</strong>: Offers a simple click-based interface, eliminating the need
+                        to memorize complex Linux commands.</li>
+                </ul>
+
+                <hr>
+
+                <h2>2. Environment Setup (Required for First-Time Users)</h2>
+                <p>Installation steps vary slightly based on your operating system version:</p>
+
+                <h3>Windows 11 Users</h3>
+                <ol>
+                    <li>Open the software and click the <code>"⚙️ Env Setup"</code> button in the top-right corner.</li>
+                    <li><strong>Critical Step</strong>: After installation, <strong>reboot your computer</strong>.</li>
+                </ol>
+
+                <h3>Windows 10 Users (Version 1903+)</h3>
+                <p>Due to the manual update requirement for Windows 10's WSL2 kernel, follow these steps:</p>
+                <ol>
+                    <li>Click the <code>"🔧 Win10 WSL2"</code> button.</li>
+                    <li><strong>Critical Step</strong>: <strong>Reboot your computer</strong> after completion.</li>
+                </ol>
+
+                <div class="alert alert-important">
+                    <div class="alert-title">⚠️ IMPORTANT</div>
+                    <p><strong>Rebooting is mandatory!</strong> Only after a reboot will Windows activate the
+                        virtualization platform.</p>
+                </div>
+
+                <hr>
+
+                <h2>3. Analysis Preparation (Image Import)</h2>
+                <p>Analysis tools in the software run as container images. Choose your preferred loading method based on
+                    your internet access:</p>
+
+                <h3>Option A: Offline Manual Import (Recommended for Limited-Network Users)</h3>
+                <ol>
+                    <li>If you already have a pre-packaged <code>.tar</code> image file (typically stored in the
+                        <code>TaxaScope_Images/</code> folder).</li>
+                    <li>Click the <code>"📥 Import Images"</code> button in the software interface and select the file.
+                    </li>
+                    <li>The program will automatically import it into the Podman engine.</li>
+                </ol>
+
+                <h3>Option B: Online Auto-Download (Recommended for Users with Overseas Network Access)</h3>
+                <ol>
+                    <li>If you can reliably access international networks (e.g., Docker Hub), <strong>manual import is
+                            unnecessary</strong>.</li>
+                    <li>Click the run button on the respective tool page, and the system will automatically download the
+                        required image from the cloud.</li>
+                    <li><strong>Note</strong>: The initial download may take longer depending on your bandwidth.</li>
+                </ol>
+
+                <hr>
+
+                <h2>4. Daily Workflow</h2>
+
+                <h3>Step 1: Start Background Services (Auto/Manual)</h3>
+                <ul>
+                    <li><strong>Auto</strong>: The software now automatically checks and attempts to run
+                        <code>podman machine start</code> upon launch.</li>
+                    <li><strong>Manual</strong>: If auto-start fails, click <code>"💻 VM Config"</code> to reconfigure
+                        and start manually.</li>
+                    <li><strong>Low-Perf Mode</strong>: Located in the top-right corner. Enabling this limits CPU cores
+                        used by containers to prevent system freezes on older or low-configuration machines.</li>
+                </ul>
+
+                <h3>Step 2: Select Working Directory</h3>
+                <ol>
+                    <li>Click <code>"📂 Select Work Directory"</code> to choose the folder containing your data.</li>
+                    <li>The <code>"File Browser"</code> on the left will immediately load files from this directory.
+                    </li>
+                </ol>
+
+                <h3>Step 3: Run Analysis (Single Tool or Batch)</h3>
+                <ul>
+                    <li><strong>Single-Tool Execution</strong>: Select the tool from the top tabs, configure parameters,
+                        and click the bottom button.
+                        <ul>
+                            <li><strong>dbCAN2 Option</strong>: It is recommended to select at least two methods (HMMER,
+                                DIAMOND, dbCAN-sub) for more reliable prediction results.</li>
+                            <li><strong>CheckM2 Option</strong>: ≤16GB RAM, enable Low-Perf Mode via the switch near the
+                                author info.</li>
+                            <li><strong>antiSMASH Option</strong>:
+                                <ul>
+                                    <li>Strictness: Default is <code>relaxed</code>.</li>
+                                    <li>High-Memory Features: Certain functions (e.g., ClusterBlast) should be enabled
+                                        only on machines with ≥32GB RAM.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Batch Execution</strong>:
+                        <ol>
+                            <li>Switch to the <code>"Batch Analysis"</code> tab.</li>
+                            <li>Check all tools you wish to run sequentially (e.g., Prokka + dbCAN + CheckM2).</li>
+                            <li>Check <code>"📊 Generate Full Report (HTML)"</code> to create a summary report upon
+                                completion.</li>
+                            <li>Click <code>"▶ Run Selected Tools"</code> at the bottom.</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <h3>Step 4: Monitor and View Reports</h3>
+                <ul>
+                    <li><strong>Monitor Tab</strong>: View current runtime, tool queue, and execution status.</li>
+                    <li><strong>Interactive Report (Batch Report)</strong>:
+                        <ol>
+                            <li>After batch execution, the software automatically opens a consolidated
+                                <code>.html</code> report in your default browser.</li>
+                            <li>The report integrates charts, result previews, and quality assessments.</li>
+                            <li>Supports image zooming and tab-switching between tools.</li>
+                        </ol>
+                    </li>
+                    <li><strong>Preview Tab</strong>: View individual result files after analysis completion.</li>
+                </ul>
+
+                <hr>
+
+                <h2>5. Exiting the Software</h2>
+                <p>To protect your system resources, a prompt will appear upon exit:</p>
+                <ul>
+                    <li><strong>Select "Yes"</strong>: Immediately executes <code>wsl --shutdown</code>. This fully
+                        releases memory, but next opening will be slower. Wait for ✅ Env Ready.</li>
+                    <li><strong>Select "No"</strong>: Exits the UI directly. WSL remains running in the background.</li>
+                </ul>
+
+                <hr>
+
+                <h2>6. Frequently Asked Questions (FAQ)</h2>
+                <p><strong>Q: Error "Cannot connect to Podman"?</strong></p>
+                <p>A: Usually because WSL backend hasn't started. Try clicking <code>"VM Config"</code> or restarting.
+                </p>
+                <p><strong>Q: Running out of disk space?</strong></p>
+                <p>A: Bioinformatics images are large. Click <code>"🗑️ Uninstall [Tool Name]"</code> when no longer
+                    needed.</p>
+                <p><strong>Q: Customize memory and CPU?</strong></p>
+                <p>A: Click <code>"VM Config"</code>. By default, it allocates 70% RAM and 75% CPU.</p>
+                <p><strong>Q: What if the software freezes?</strong></p>
+                <p>A: Click <code>"⏹ Stop Current Task"</code> at the bottom to kill all running functions.</p>
+
+                <footer>
+                    Created by: <span class="authors">PENG YUXIN & JIANG YUE</span>
+                </footer>
+            </div>
+
+            <!-- KOREAN SECTION -->
+            <div id="ko" class="content-section">
+                <h1>TaxaScope KRIBB-KCTC 사용자 가이드</h1>
+                <p><strong>TaxaScope KRIBB-KCTC</strong>에 오신 것을 환영합니다! 이 설명서는 환경 설정부터 생물정보학(Bioinformatics) 분석 실행까지의 전
+                    과정을 안내합니다.</p>
+
+                <hr>
+
+                <h2>1. 소프트웨어 개요</h2>
+                <p>TaxaScope KRIBB-KCTC은 복잡한 생물정보학 워크플로우를 단순화하기 위해 설계된 Windows 기반의 그래픽 툴박스입니다.</p>
+                <ul>
+                    <li><strong>오프라인 작동</strong>: 지속적인 인터넷 연결 없이도 사전 패키징된 이미지를 가져와 사용할 수 있습니다.</li>
+                    <li><strong>네이티브 경험</strong>: 복잡한 리눅스 명령어를 외울 필요 없이 간단한 클릭 기반의 인터페이스를 제공합니다.</li>
+                </ul>
+
+                <hr>
+
+                <h2>2. 환경 설정 (최초 사용자 필수)</h2>
+                <p>설치 단계는 운영 체제 버전에 따라 약간 다릅니다.</p>
+
+                <h3>Windows 11 사용자</h3>
+                <ol>
+                    <li>소프트웨어를 실행하고 우측 상단의 <code>"⚙️ Env Setup"</code> 버튼을 클릭합니다.</li>
+                    <li><strong>중요 단계</strong>: 설치 완료 후, 반드시 <strong>컴퓨터를 다시 시작</strong>하십시오.</li>
+                </ol>
+
+                <h3>Windows 10 사용자 (버전 1903 이상)</h3>
+                <p>Windows 10의 WSL2 커널 수동 업데이트가 필요하므로 다음 단계를 따르세요.</p>
+                <ol>
+                    <li><code>"🔧 Win10 WSL2"</code> 버튼을 클릭합니다.</li>
+                    <li><strong>중요 단계</strong>: 완료 후 반드시 <strong>컴퓨터를 다시 시작</strong>하십시오.</li>
+                </ol>
+
+                <div class="alert alert-important">
+                    <div class="alert-title">⚠️ IMPORTANT</div>
+                    <p><strong>재부팅은 필수입니다!</strong> 재부팅 후에만 Windows에서 가상화 플랫폼이 활성화됩니다.</p>
+                </div>
+
+                <hr>
+
+                <h2>3. 분석 준비 (이미지 임포트)</h2>
+                <p>소프트웨어의 분석 도구들은 컨테이너 이미지로 실행됩니다. 네트워크 환경에 따라 적절한 로드 방법을 선택하세요.</p>
+
+                <h3>옵션 A: 오프라인 수동 임포트 (네트워크 제한 환경 권장)</h3>
+                <ol>
+                    <li>사전 패키징된 <code>.tar</code> 이미지 파일이 있는 경우(보통 <code>TaxaScope_Images/</code> 폴더에 저장됨).</li>
+                    <li>인터페이스에서 <code>"📥 Import Images"</code> 버튼을 클릭하고 해당 파일을 선택합니다.</li>
+                    <li>프로그램이 자동으로 Podman 엔진에 이미지를 가져옵니다.</li>
+                </ol>
+
+                <h3>옵션 B: 온라인 자동 다운로드 (해외 네트워크 접속 원활 시 권장)</h3>
+                <ol>
+                    <li>Docker Hub 등 국제 네트워크에 안정적으로 접속할 수 있는 경우, <strong>수동 임포트가 필요하지 않습니다.</strong></li>
+                    <li>각 도구 페이지에서 실행 버튼을 클릭하면 시스템이 클라우드에서 필요한 이미지를 자동으로 다운로드합니다.</li>
+                    <li><strong>참고</strong>: 대역폭에 따라 초기 다운로드 시간이 다소 소요될 수 있습니다.</li>
+                </ol>
+
+                <hr>
+
+                <h2>4. 일일 워크플로우</h2>
+
+                <h3>1단계: 백그라운드 서비스 시작 (자동/수동)</h3>
+                <ul>
+                    <li><strong>자동</strong>: 이제 소프트웨어 실행 시 자동으로 <code>podman machine start</code>를 확인하고 실행을 시도합니다.</li>
+                    <li><strong>수동</strong>: 자동 시작에 실패하면 <code>"💻 VM Config"</code>를 클릭하여 수동으로 재설정하고 시작하십시오.</li>
+                    <li><strong>저사양 모드(Low-Perf Mode)</strong>: 우측 상단에 위치합니다. 이 모드를 활성화하면 컨테이너가 사용하는 CPU 코어 수를 제한하여 저사양
+                        PC에서의 시스템 프리징을 방지합니다.</li>
+                </ul>
+
+                <h3>2단계: 작업 디렉토리 선택</h3>
+                <ol>
+                    <li><code>"📂 Select Work Directory"</code>를 클릭하여 데이터가 포함된 폴더를 선택합니다.</li>
+                    <li>왼쪽의 <code>"File Browser"</code>에 해당 디렉토리의 파일이 즉시 로드됩니다.</li>
+                </ol>
+
+                <h3>3단계: 분석 실행 (단일 도구 또는 일괄 처리)</h3>
+                <ul>
+                    <li><strong>단일 도구 실행</strong>: 상단 탭에서 도구를 선택하고 파라미터를 설정한 후 하단 버튼을 클릭합니다.
+                        <ul>
+                            <li><strong>dbCAN2 옵션</strong>: 더 신뢰도 높은 예측 결과를 위해 최소 두 가지 방법(HMMER, DIAMOND, dbCAN-sub)을
+                                선택하는 것이 좋습니다.</li>
+                            <li><strong>CheckM2 옵션</strong>: RAM이 16GB 이하인 경우, 저사양 모드를 활성화하십시오.</li>
+                            <li><strong>antiSMASH 옵션</strong>:
+                                <ul>
+                                    <li>엄격도(Strictness): 기본값은 <code>relaxed</code>입니다.</li>
+                                    <li>고메모리 기능: ClusterBlast 등 일부 기능은 RAM 32GB 이상의 기기에서만 권장합니다.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>일괄 실행 (Batch Execution)</strong>:
+                        <ol>
+                            <li><code>"Batch Analysis"</code> 탭으로 전환합니다.</li>
+                            <li>순차적으로 실행할 도구들을 체크합니다 (예: Prokka + dbCAN + CheckM2).</li>
+                            <li>완료 후 요약 보고서를 생성하려면 <code>"📊 Generate Full Report (HTML)"</code>를 체크합니다.</li>
+                            <li>하단의 <code>"▶ Run Selected Tools"</code>를 클릭합니다.</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <h3>4단계: 모니터링 및 보고서 확인</h3>
+                <ul>
+                    <li><strong>Monitor 탭</strong>: 현재 실행 시간, 도구 대기열 및 실행 상태를 확인합니다.</li>
+                    <li><strong>대화형 보고서 (Batch Report)</strong>:
+                        <ol>
+                            <li>일괄 실행이 완료되면 통합된 <code>.html</code> 보고서가 자동으로 열립니다.</li>
+                            <li>보고서에는 차트, 결과 미리보기, 품질 평가가 포함됩니다.</li>
+                            <li>이미지 확대 및 도구 간 탭 전환을 지원합니다.</li>
+                        </ol>
+                    </li>
+                    <li><strong>Preview 탭</strong>: 분석 완료 후 개별 결과 파일을 확인합니다.</li>
+                </ul>
+
+                <hr>
+
+                <h2>5. 소프트웨어 종료</h2>
+                <p>시스템 리소스를 보호하기 위해 종료 시 다음과 같은 프롬프트가 표시됩니다.</p>
+                <ul>
+                    <li><strong>"Yes" 선택</strong>: 즉시 <code>wsl --shutdown</code>을 실행합니다. 메모리를 완전히 해제하지만, 다음 실행 시 속도가 약간
+                        느려질 수 있습니다. ✅ Env Ready 상태를 기다려야 합니다.</li>
+                    <li><strong>"No" 선택</strong>: UI만 종료합니다. WSL은 백그라운드에서 계속 실행됩니다.</li>
+                </ul>
+
+                <hr>
+
+                <h2>6. 자주 묻는 질문 (FAQ)</h2>
+                <p><strong>Q: "Cannot connect to Podman" 오류 발생?</strong></p>
+                <p>A: 보통 WSL 프로세스가 시작되지 않았기 때문입니다. <code>"VM Config"</code>를 클릭하거나 재시작해 보세요.</p>
+                <p><strong>Q: 디스크 공간 부족?</strong></p>
+                <p>A: 이미지가 용량을 많이 차지합니다. 필요 없는 도구는 <code>"🗑️ Uninstall"</code> 하세요.</p>
+                <p><strong>Q: 메모리와 CPU 사용자 지정?</strong></p>
+                <p>A: <code>"VM Config"</code>에서 가능합니다. 기본 70% RAM, 75% CPU 할당.</p>
+                <p><strong>Q: 소프트웨어가 멈추면?</strong></p>
+                <p>A: <code>"⏹ Stop Current Task"</code>를 클릭하여 모든 기능을 종료하세요.</p>
+
+                <footer>
+                    제작자: <span class="authors">PENG YUXIN & JIANG YUE</span>
+                </footer>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update buttons
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update content sections
+                const lang = btn.getAttribute('data-lang');
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(lang).classList.add('active');
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
