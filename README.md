@@ -13,6 +13,7 @@ TaxaScope is an integrated, GUI-driven bioinformatics toolkit designed for micro
 For reviewers and users, a complete GitHub-accessible manual is provided here:
 
 - **[TaxaScope User Manual](docs/TaxaScope_User_Manual.md)**
+- **[HTML User Guide](BioToolkit_Guide.html)**
 
 The manual includes:
 
