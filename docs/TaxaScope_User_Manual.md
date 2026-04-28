@@ -1,158 +1,248 @@
 # TaxaScope User Manual
 
-TaxaScope is an integrated graphical user interface (GUI) toolkit for microbial genome analysis on Windows. It provides a guided environment for configuring, executing, inspecting, and documenting genome-based taxonomic workflows.
+TaxaScope is a Windows desktop GUI for microbial genome analysis. It wraps containerized bioinformatics tools, working-directory management, database tracking, batch execution, result preview, and reproducibility reporting into a single workflow.
 
-## Overview
+This manual reflects the current TaxaScope GUI and local implementation. The main user path is:
 
-TaxaScope is designed to reduce the manual burden of command-line bioinformatics workflows while preserving reproducibility. The software integrates containerized execution, working-directory-based data management, database tracking, batch workflow configuration, and result inspection in a single desktop interface.
+```text
+Open TaxaScope.exe
+-> Env Setup
+-> Select Work Directory
+-> Download DBs
+-> Get Data or add local files
+-> configure modules
+-> Batch
+-> Deploy Complete Workflow
+-> inspect Runtime, Console, Preview, and reports
+```
 
-The main workflow supports:
-
-- genome assembly statistics
-- genome annotation
-- genome quality assessment
-- completeness assessment
-- CAZyme annotation
-- biosynthetic gene cluster detection
-- ANI/AAI comparison
-- whole-genome phylogeny
-- structured run reporting
-
-## Graphical User Interface
-
-**Figure 2. Graphical user interface (GUI) workflow of TaxaScope.** The TaxaScope graphical user interface provides an integrated environment for configuring and executing genome-based taxonomic workflows. The interface is organized into functional panels guiding users from environment initialization to workflow execution and result inspection.
-
-The workflow is operated as follows:
-
-1. **Open TaxaScope and install the environment.** Run `TaxaScope.exe`. On first use, click `Env Setup` to install or initialize WSL2 and the container engine, using Podman by default with Docker fallback where available. This step is performed once and is not required for subsequent analyses.
-2. **Confirm the environment.** When the interface shows `Env Ready`, the execution environment is available. Use `VM Config` only when the Podman virtual machine requires memory/CPU adjustment or repair.
-3. **Select the working directory.** Click `Select Work Directory` and choose the project folder. TaxaScope uses this folder for input data, intermediate files, databases, reports, and final outputs.
-4. **Download reference databases.** Click `Download DBs` to install required databases into `TaxaScope_Databases` under the selected working directory. Database source and version information is recorded in `database_sources.json`.
-5. **Add input data.** Use `Get Data` to paste GCA/GCF accessions and download genome assemblies from NCBI, or place local FASTA/FA/FNA/FAA files directly in the working directory.
-6. **Configure module parameters.** Open module tabs such as Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, and AAI/ANI to adjust tool-specific settings before execution.
-7. **Select the batch workflow.** Open `Batch` mode, select the modules to run sequentially, and keep report generation enabled when HTML, Markdown, and JSON run reports are needed.
-8. **Run and inspect results.** Click `Deploy Complete Workflow`. The `Runtime` tab displays task progress, the `Console` tab records command-line logs, and the `Preview` tab displays selected tables, figures, reports, and tree files from the left file browser.
-
-The left panel displays the file browser and shows all input files, intermediate results, and outputs generated within the working directory. The central panel presents workflow configuration and module selection. The right panel contains three tabs: `Runtime` for task status and progress, `Console` for transparent command-line logs and troubleshooting, and `Preview` for visualization of selected result files.
-
-## System Requirements
+## 1. System Requirements
 
 Recommended environment:
 
 - Windows 10 or Windows 11
-- WSL2
-- Podman or Docker Desktop configured for Linux containers
+- WSL2 enabled
+- Podman, or Docker Desktop configured for Linux containers
 - At least 16 GB RAM for small bacterial genome batches
-- 32 GB RAM or higher for CheckM2, antiSMASH, and larger batch workflows
-- Sufficient disk space for databases, containers, and intermediate outputs
+- 32 GB RAM or higher for CheckM2, antiSMASH, PhyloPhlAn, and larger batch workflows
+- Sufficient disk space for container images, reference databases, intermediate files, and output reports
 
-TaxaScope primarily uses Podman on Windows, while the main analysis modules include Docker fallback support when Docker Desktop is installed and running.
+TaxaScope uses Podman by default on Windows. Docker can be used as a fallback when Docker Desktop is installed and running.
 
-## Working Directory
+## 2. First-Time Setup
 
-TaxaScope uses one selected folder as the working directory. This directory stores input data, intermediate files, outputs, local databases, and run reports.
+### 2.1 Start TaxaScope
 
-Example layout:
+Run `TaxaScope.exe`. The upper control bar contains the buttons used to initialize and manage the environment:
+
+- `Env Setup`: installs or initializes the WSL2 and container execution environment.
+- `Env Ready`: shown when TaxaScope detects that the execution environment is available.
+- `VM Config`: adjusts or recreates the Podman VM when memory, CPU allocation, or VM repair is needed.
+- `Low Perf Mode`: reduces resource usage for memory-limited machines.
+
+### 2.2 Install the Environment
+
+On first use, click `Env Setup`.
+
+Windows 10 users may be asked to complete WSL2 helper steps and reboot. After the computer restarts, open TaxaScope again and confirm that the button changes to `Env Ready`.
+
+Do not use `VM Config` as the normal first step. Use it only when Podman was installed manually, the VM needs more memory or CPU, or the VM needs to be recreated.
+
+## 3. Working Directory
+
+Click `Select Work Directory` and choose a project folder. TaxaScope treats this folder as the source of truth for the whole analysis:
+
+- input genome or protein files
+- NCBI-downloaded assemblies and metadata
+- reference databases
+- intermediate files
+- module-specific result folders
+- final HTML, Markdown, and JSON reports
+
+Recommended layout:
 
 ```text
 project_folder/
-├── genome_1.fasta
-├── genome_2.fasta
-├── metadata.json
-├── TaxaScope_Databases/
-├── genome_stats.xlsx
-├── *_Prokka_Results/
-├── *_checkm2_results/
-├── *_busco_results/
-├── *_ANI-AAI/
-├── *_phylophlan_results/
-├── TaxaScope_Run_Manifest.json
-├── TaxaScope_Run_Report.md
-└── TaxaScope_Report.html
+|-- genome_1.fasta
+|-- genome_2.fasta
+|-- metadata.json
+|-- TaxaScope_Databases/
+|   |-- database_sources.json
+|   |-- DATABASE_SOURCES.md
+|   |-- prokka/
+|   |-- dbcan/
+|   |-- busco/
+|   |-- checkm2/
+|   |-- antismash/
+|   `-- phylophlan/
+|-- genome_stats.xlsx
+|-- 2026xxxx_Prokka_Results/
+|-- 2026xxxx_checkm2_results/
+|-- 2026xxxx_busco_results/
+|-- 2026xxxx_dbCAN2_Results/
+|-- 2026xxxx_antiSMASH_Results/
+|-- 2026xxxx_phylophlan_results/
+|-- 2026xxxx_ANI-AAI/
+|-- .runtimes.json
+|-- TaxaScope_Run_Manifest.json
+|-- TaxaScope_Run_Report.md
+`-- TaxaScope_Report.html
 ```
 
-## Input Formats
+## 4. Database Setup
 
-Supported input formats depend on the selected module.
-
-| Module | Input format | Purpose |
-| --- | --- | --- |
-| Get Data | GCA/GCF accessions | NCBI genome acquisition |
-| Genome Stats | `.fasta`, `.fa`, `.fna` | Assembly statistics |
-| Prokka | `.fasta`, `.fa`, `.fna` | Genome annotation |
-| CheckM | `.fasta`, `.fa`, `.fna` | Genome quality assessment |
-| BUSCO | `.fasta`, `.fa`, `.fna` | Genome completeness assessment |
-| dbCAN | `.faa` | CAZyme annotation |
-| antiSMASH | `.fasta`, `.fa`, `.fna`, `.gbk`, `.gbff` | Biosynthetic gene cluster detection |
-| PhyloPhlAn | `.faa` | Whole-genome phylogeny |
-| AAI/ANI | `.fasta`, `.fa`, `.fna` | Pairwise genome similarity |
-
-## Database Setup
-
-Reference databases are stored under the selected working directory:
+After selecting the working directory, click `Download DBs`. This downloads the reference databases into:
 
 ```text
 <working directory>/TaxaScope_Databases
 ```
 
-The database folder includes a structured source manifest:
+The database downloader records fixed source and version information in:
 
 ```text
 TaxaScope_Databases/database_sources.json
+TaxaScope_Databases/DATABASE_SOURCES.md
+TaxaScope_Databases/LICENSE_CONFIRMATION.txt
 ```
 
-TaxaScope uses this file to report database names, versions, download sources, and notes in the reproducibility outputs.
+These files are used by the reproducibility reports. Database download may take a long time because several databases are large.
 
-## Complete Analysis Case
+The current database plan includes:
 
-This example describes a typical bacterial genome workflow.
+| Database | Used by | Current source/version recorded by TaxaScope |
+| --- | --- | --- |
+| Prokka database package | Prokka | Prokka v1.14.6 database package |
+| dbCAN fixed bundle | dbCAN | `db_v5-2_9-13-2025` |
+| BUSCO bacterial lineages | BUSCO | `bacteria_odb12.2025-05-14` and `bacteria_odb10.2024-01-08` |
+| CheckM2 database | CheckM | Zenodo record 14897628 |
+| antiSMASH databases | antiSMASH | standalone-lite 8.0.4 databases |
+| PhyloPhlAn marker database | PhyloPhlAn | `phylophlan.tar` marker database |
 
-### 1. Open TaxaScope and Install the Environment
+If a module reports that a database is missing, return to the same working directory and run `Download DBs` again. Already completed databases are skipped when readiness markers are present.
 
-Run `TaxaScope.exe`. On the first run, click `Env Setup` to install or initialize WSL2 and the Podman/Docker execution environment. Windows 10 users should complete the WSL2 helper steps and reboot if prompted. After setup, confirm that the status button shows `Env Ready`.
+## 5. Input Data
 
-### 2. Select Working Directory
+TaxaScope accepts either local files or NCBI accession-based downloads.
 
-Click `Select Work Directory` and choose a project folder. TaxaScope will use this location for input files, intermediate files, final outputs, databases, and reports.
+### 5.1 NCBI Download
 
-### 3. Download Databases
+Open the `Get Data` tab and enter one GCA or GCF accession per line. The NCBI downloader can retrieve:
 
-Click `Download DBs` to install the required reference databases. This step is required only once for a working directory. The database folder can also be copied to another project directory for reuse. Database source records are written to `TaxaScope_Databases/database_sources.json`.
+- genome sequences in FASTA format
+- protein sequences in FAA format
+- GenBank records in GBFF format
+- annotation features in GFF3 format
+- assembly data reports in JSON format
 
-### 4. Add Input Data
+TaxaScope organizes downloaded files into the selected working directory and preserves NCBI metadata as `metadata.json` where available.
 
-Use `Get Data` to paste GCA/GCF accessions and download assemblies from NCBI, or place local genome/protein sequence files directly in the working directory.
+### 5.2 Local Files
 
-### 5. Configure Modules
+Alternatively, place local files directly in the working directory before running modules.
 
-Open each analysis module tab and adjust parameters when needed. For example, users can select dbCAN methods, adjust antiSMASH settings, or enable Low Perf Mode for memory-limited machines.
+| Module | Expected input | Notes |
+| --- | --- | --- |
+| Genome Stats | `.fasta`, `.fa`, `.fna` | Calculates assembly length, contigs, GC content, and N50. |
+| Prokka | `.fasta`, `.fa`, `.fna` | Produces genome annotation and protein outputs. |
+| CheckM | `.fasta`, `.fa`, `.fna` | Runs CheckM2 quality assessment. |
+| BUSCO | `.fasta`, `.fa`, `.fna` | Runs bacterial lineage completeness assessment. |
+| dbCAN | `.faa` | Uses protein FASTA. Run Prokka first or download FAA files from NCBI. |
+| antiSMASH | `.fasta`, `.fa`, `.fna`, `.gbk`, `.gbff` | GenBank input is recommended when annotation is available. |
+| PhyloPhlAn | `.faa` | Uses protein FASTA. At least five genomes are recommended. |
+| AAI/ANI | `.fasta`, `.fa`, `.fna` | Computes genome similarity and heatmaps. |
 
-### 6. Run the Workflow
+## 6. GUI Panels
 
-Open `Batch` mode, select the desired modules, and click `Deploy Complete Workflow`. TaxaScope will run the selected tools sequentially and write outputs into the working directory.
+The main window is organized into three working areas:
 
-### 7. Inspect Results
+- Left panel: `File Browser`. It shows the selected working directory. Click a file to preview it; click the folder label to open the folder in Windows Explorer.
+- Center panel: module tabs. These include `Get Data`, `Genome Stats`, `Prokka`, `CheckM`, `BUSCO`, `dbCAN`, `antiSMASH`, `PhyloPhlAn`, `AAI/ANI`, and `Batch`.
+- Right panel: `Runtime`, `Console`, and `Preview`.
 
-Use the file browser to select output tables, figures, reports, or tree files. The `Preview` panel displays compatible result files directly in the GUI. The `Runtime` and `Console` tabs provide progress and command logs for troubleshooting.
+The right panel is important for troubleshooting:
 
-## Typical Batch Workflow
+- `Runtime`: task status, progress, and elapsed time.
+- `Console`: command-line logs from PowerShell, Podman, Docker, and tool wrappers.
+- `Preview`: compatible results including images, SVG files, PDFs, text files, tables, Excel files, and Newick/tree files.
 
-A standard taxonomic workflow can include:
+## 7. Complete Analysis Workflow
 
-1. Genome Stats
-2. Prokka
-3. CheckM
-4. BUSCO
-5. dbCAN
-6. antiSMASH
-7. PhyloPhlAn
-8. AAI/ANI
+This is the recommended end-to-end workflow for a typical bacterial genome project.
 
-Users can enable or disable modules depending on the scientific question and available input formats.
+### Step 1. Open the Software
 
-## Reproducibility Reports
+Run `TaxaScope.exe`. If the environment is not configured, click `Env Setup`. Wait until the interface reports `Env Ready`.
 
-TaxaScope exports structured reports for each run.
+### Step 2. Select a Project Folder
+
+Click `Select Work Directory` and choose the folder for this analysis. Do not scatter inputs and outputs across multiple locations; TaxaScope expects the working directory to contain the data, databases, outputs, and reports.
+
+### Step 3. Download Databases
+
+Click `Download DBs`. Confirm the license notice and allow the downloader to populate `TaxaScope_Databases`.
+
+This step is usually performed once for a working directory. The database folder can be reused by copying `TaxaScope_Databases` into another project folder.
+
+### Step 4. Add Genome Data
+
+Use one of two routes:
+
+- For NCBI data, open `Get Data`, paste GCA/GCF accessions, choose the desired file types, and click `Start Download`.
+- For local data, copy `.fasta`, `.fa`, `.fna`, `.faa`, `.gbk`, or `.gbff` files into the working directory.
+
+### Step 5. Configure Module Parameters
+
+Open module tabs and adjust settings before execution.
+
+Important examples:
+
+- `dbCAN`: select at least two methods such as HMMER, DIAMOND, and dbCAN-S for more reliable CAZyme prediction.
+- `antiSMASH`: select strictness and optional analyses carefully; some options increase memory usage.
+- `Low Perf Mode`: enable this for systems with limited RAM, especially for antiSMASH and CheckM2.
+- `PhyloPhlAn`: provide `.faa` files and ensure enough genomes are included for a meaningful tree.
+
+### Step 6. Run Batch Mode
+
+Open `Batch`. The Batch page has two functional areas:
+
+- `Data Acquisition (Optional)`: paste GCA/GCF accessions if the workflow should download genomes before analysis.
+- `Analysis Sequence Setup`: select modules to run sequentially.
+
+Keep `Auto-generate Interactive HTML Research Report` enabled if an aggregated report is needed.
+
+Click `DEPLOY COMPLETE WORKFLOW` to start the selected workflow. TaxaScope asks for confirmation and then runs modules sequentially.
+
+### Step 7. Monitor and Inspect
+
+During execution:
+
+- use `Runtime` to check progress
+- use `Console` to inspect command logs and errors
+- use `File Browser` to see newly generated files
+- use `Preview` to inspect plots, tables, reports, and tree files
+
+After completion, review:
+
+- `TaxaScope_Report.html`
+- `TaxaScope_Run_Report.md`
+- `TaxaScope_Run_Manifest.json`
+
+## 8. Module Outputs
+
+| Module | Main outputs |
+| --- | --- |
+| Genome Stats | `genome_stats.xlsx` |
+| Prokka | `*_Prokka_Results/`, sample-level GFF/GBK/FNA/FAA files, `final_result.tsv`, merged Excel tables, genome circle plots |
+| CheckM | `*_checkm2_results/`, `quality_report.tsv`, `CheckM_Plot.svg` |
+| BUSCO | `*_busco_results/`, short summaries, `busco_summary_report_v2.svg`, `busco_summary_report_v2.png` |
+| dbCAN | `*_dbCAN2_Results/`, overview files, merged Excel results, `dbCAN_HMMER_Summary.svg`, `dbCAN_DIAMOND_Summary.svg` |
+| antiSMASH | `*_antiSMASH_Results/`, antiSMASH HTML/JSON outputs, summary plots when available |
+| PhyloPhlAn | `*_phylophlan_results/`, tree files such as `.contree`, `.treefile`, `.tre`, `.nwk`, and optional RAxML bootstrap trees |
+| AAI/ANI | `*_ANI-AAI/`, ANI and AAI tables, heatmap SVG/PNG files |
+
+## 9. Reproducibility Reports
+
+TaxaScope writes structured run metadata for reproducible taxonomy workflows.
 
 ### `TaxaScope_Run_Manifest.json`
 
@@ -161,51 +251,54 @@ Machine-readable manifest containing:
 - TaxaScope version
 - working directory
 - database root
-- software environment
-- tool names
-- software versions
+- database source records
+- operating system and runtime information
+- tool names and software versions
 - container images
-- database versions
-- run parameters
-- timestamps
+- parameters
+- timestamps and duration
 - input files
-- output files
+- detected output files
 - run status
 
 ### `TaxaScope_Run_Report.md`
 
-Human-readable Markdown summary containing the same provenance information in a manuscript- and reviewer-friendly format.
+Human-readable Markdown summary containing the same provenance information. This file is suitable for supplementary materials, internal records, and reviewer responses.
 
 ### `TaxaScope_Report.html`
 
-Interactive HTML report containing analysis summaries, tables, figures, execution records, software information, and database information.
+Interactive HTML report aggregating result tables, plots, module outputs, runtime summaries, and a reproducibility section. Timestamped HTML copies may also be created during report generation, while `TaxaScope_Report.html` is the stable latest report name.
 
-## Troubleshooting
+## 10. Troubleshooting
 
-### Container runtime is not available
+### `Env Ready` does not appear
 
-Install or start Podman or Docker Desktop. On Windows, Docker Desktop must be configured for Linux containers.
+Start Podman or Docker Desktop and reopen TaxaScope. If Podman was installed manually or the VM is broken, use `VM Config`.
 
-### Database is missing
+### A module says the database is missing
 
-Run Download DBs and confirm that `TaxaScope_Databases/database_sources.json` exists.
+Confirm that the selected working directory contains `TaxaScope_Databases`. Then click `Download DBs` again. Confirm that `database_sources.json` and the relevant database subfolder exist.
 
-### No files appear in the workflow
+### No files are detected
 
-Confirm that the selected working directory contains supported input files, or use Get Data to download genomes from NCBI.
+Confirm that the selected working directory contains files with supported extensions. For dbCAN and PhyloPhlAn, `.faa` protein files are required.
+
+### NCBI download fails
+
+Try a smaller accession batch, for example 5 to 8 genomes. NCBI bundle generation can fail or return invalid ZIP archives during busy periods.
 
 ### A module fails because of memory
 
-Enable Low Perf Mode or increase the container runtime memory allocation.
+Enable `Low Perf Mode`, reduce the number of input genomes, or increase the Podman VM memory allocation through `VM Config`.
 
-### Tree files do not appear
+### PhyloPhlAn tree files are confusing
 
-Confirm that protein FASTA files are available for PhyloPhlAn and that the required marker database has been installed.
+TaxaScope may produce several tree outputs. IQ-TREE `.treefile` labels can contain SH-aLRT/UFBoot paired support values, while `.contree` is preferred when bootstrap-only support labels are needed. Optional RAxML bootstrap output may also be exported when the concatenated alignment is available.
 
-## Reviewer-Facing Statement
+## 11. Reviewer-Facing Statement
 
-The following text can be adapted for manuscript revision or reviewer response:
+The following wording can be adapted for manuscript revision or reviewer response:
 
 ```text
-We added a GitHub-accessible TaxaScope user manual containing a complete analysis case tutorial, GUI workflow description, input/output guidance, database setup instructions, and reproducibility report documentation. The manual now provides a text-based Figure 2 workflow explanation covering environment installation, working directory selection, database download, input acquisition, parameter configuration, batch workflow selection, one-click execution, file browsing, runtime logs, and result preview.
+A GitHub-accessible TaxaScope user manual and multilingual HTML guide were updated to provide a complete end-to-end workflow. The documentation now describes first-time environment setup, working directory selection, one-click database download with database source manifests, NCBI or local input preparation, module parameter configuration, batch workflow execution, result inspection, output directory structure, and HTML/Markdown/JSON reproducibility reports containing software, database, parameter, timestamp, input, and output metadata.
 ```

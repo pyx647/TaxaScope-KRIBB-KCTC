@@ -6,21 +6,23 @@
   <title>TaxaScope User Guide</title>
   <style>
     :root {
-      --primary: #1f6fb2;
-      --accent: #d94835;
-      --ink: #1f2933;
-      --muted: #5f6b7a;
-      --line: #d9e2ec;
-      --bg: #f6f8fb;
+      --primary: #1267a8;
+      --accent: #c73f32;
+      --ink: #17212b;
+      --muted: #5e6b78;
+      --line: #d7e0ea;
+      --bg: #f4f7fa;
       --panel: #ffffff;
+      --code-bg: #0f1724;
+      --code-ink: #e8eef7;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--ink);
-      line-height: 1.62;
       background: var(--bg);
+      line-height: 1.62;
     }
     header {
       background: var(--panel);
@@ -28,27 +30,15 @@
       padding: 20px 28px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 16px;
     }
-    header h1 {
-      margin: 0;
-      color: var(--primary);
-      font-size: 26px;
-    }
-    header p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .lang-switcher {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    header h1 { margin: 0; color: var(--primary); font-size: 26px; }
+    header p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+    .lang-switcher { display: flex; gap: 8px; flex-wrap: wrap; }
     .lang-switcher button {
       border: 1px solid var(--line);
       background: #f9fbfd;
@@ -60,14 +50,10 @@
     }
     .lang-switcher button.active {
       background: var(--primary);
-      color: white;
+      color: #fff;
       border-color: var(--primary);
     }
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 28px;
-    }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px; }
     .content { display: none; }
     .content.active { display: block; }
     section {
@@ -79,9 +65,9 @@
     }
     h2 {
       margin: 0 0 16px;
+      padding-bottom: 8px;
       color: var(--primary);
       border-bottom: 2px solid var(--line);
-      padding-bottom: 8px;
     }
     h3 { margin: 22px 0 8px; }
     a { color: var(--primary); font-weight: 700; }
@@ -107,38 +93,6 @@
       background: #f9fbfd;
       padding: 16px;
     }
-    .caption {
-      padding: 14px 16px;
-      color: var(--muted);
-      font-size: 14px;
-      border-top: 1px solid var(--line);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 14px 0;
-      font-size: 14px;
-    }
-    th, td {
-      border: 1px solid var(--line);
-      padding: 9px 10px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th { background: #eef5fb; }
-    code {
-      background: #eef2f7;
-      padding: 2px 5px;
-      border-radius: 4px;
-      font-family: Consolas, monospace;
-    }
-    pre {
-      background: #111827;
-      color: #f9fafb;
-      padding: 16px;
-      border-radius: 8px;
-      overflow-x: auto;
-    }
     .note {
       border-left: 5px solid var(--accent);
       background: #fff7f5;
@@ -146,11 +100,32 @@
       border-radius: 8px;
       margin: 16px 0;
     }
-    footer {
-      color: var(--muted);
-      text-align: center;
-      padding: 28px;
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+    th, td { border: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
+    th { background: #eef5fb; }
+    code {
+      background: #eef2f7;
+      color: #16202a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: Consolas, "Courier New", monospace;
     }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid #243044;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      white-space: pre;
+    }
+    footer { color: var(--muted); text-align: center; padding: 28px; }
     @media (max-width: 720px) {
       header { align-items: flex-start; flex-direction: column; }
       main { padding: 16px; }
@@ -162,7 +137,7 @@
   <header>
     <div>
       <h1>TaxaScope User Guide</h1>
-      <p>GUI-based microbial genome analysis, workflow configuration, and reproducible reporting</p>
+      <p>GUI workflow, database setup, batch execution, result preview, and reproducibility reports</p>
     </div>
     <div class="lang-switcher" aria-label="Language selector">
       <button class="active" data-lang="en">English</button>
@@ -175,357 +150,420 @@
     <div id="en" class="content active">
       <section>
         <h2>Documentation Index</h2>
-        <p>This HTML guide is the multilingual version of the current TaxaScope GitHub user manual.</p>
+        <p>This single-file HTML guide is a multilingual operational manual for the current TaxaScope GUI. It does not depend on external images, so it can be downloaded and opened locally.</p>
         <div class="toc">
-          <a href="#en-overview">Overview</a>
-          <a href="#en-gui">GUI Workflow</a>
-          <a href="#en-requirements">System Requirements</a>
-          <a href="#en-inputs">Input Formats</a>
-          <a href="#en-database">Database Setup</a>
-          <a href="#en-case">Complete Analysis Case</a>
-          <a href="#en-reports">Reproducibility Reports</a>
-          <a href="#en-troubleshooting">Troubleshooting</a>
+          <a href="#en-overview">1. Overview</a>
+          <a href="#en-first">2. First-time setup</a>
+          <a href="#en-workdir">3. Working directory and databases</a>
+          <a href="#en-inputs">4. Input data</a>
+          <a href="#en-gui">5. GUI workflow</a>
+          <a href="#en-modules">6. Modules and outputs</a>
+          <a href="#en-reports">7. Reports and reproducibility</a>
+          <a href="#en-troubleshooting">8. Troubleshooting</a>
         </div>
       </section>
 
       <section id="en-overview">
         <h2>1. Overview</h2>
-        <p>TaxaScope is an integrated GUI toolkit for microbial genome analysis on Windows. It provides a guided environment for configuring, executing, inspecting, and documenting genome-based taxonomic workflows.</p>
-        <ul>
-          <li>Genome assembly statistics and annotation</li>
-          <li>Genome quality and completeness assessment</li>
-          <li>CAZyme and biosynthetic gene cluster analysis</li>
-          <li>ANI/AAI comparison and whole-genome phylogeny</li>
-          <li>HTML, Markdown, and JSON reproducibility reporting</li>
-        </ul>
+        <p>TaxaScope is a Windows desktop application for microbial genome analysis. It combines WSL2, Podman/Docker, containerized tools, working-directory management, file preview, and provenance reporting into one graphical workflow.</p>
+        <p>The practical workflow is:</p>
+        <pre><code>Open TaxaScope.exe
+-> Env Setup
+-> Select Work Directory
+-> Download DBs
+-> Get Data or add local files
+-> configure modules
+-> Batch
+-> DEPLOY COMPLETE WORKFLOW
+-> inspect Runtime, Console, Preview, and reports</code></pre>
       </section>
 
-      <section id="en-gui">
-        <h2>2. Graphical User Interface and Workflow Configuration</h2>
-        <div class="workflow-box">
-          <p><strong>Figure 2. Graphical user interface (GUI) of TaxaScope and workflow configuration.</strong></p>
-          <ol>
-            <li><strong>Environment setup:</strong> click <code>Env Setup</code> for first-time WSL2 and container engine initialization. This is required only once.</li>
-            <li><strong>Working directory selection:</strong> click <code>Select Work Directory</code> and choose the project folder containing inputs and outputs.</li>
-            <li><strong>Database download:</strong> click <code>Download DBs</code> to install required reference databases into the selected working directory.</li>
-            <li><strong>Parameter configuration:</strong> use the module tabs, such as Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, and AAI/ANI, to adjust tool-specific settings.</li>
-            <li><strong>Data acquisition:</strong> use <code>Get Data</code> to paste GCA/GCF accessions and download genomes, or place local FASTA/FA/FNA/FAA files in the working directory.</li>
-            <li><strong>Workflow selection:</strong> open <code>Batch</code> mode and select the modules to run sequentially.</li>
-            <li><strong>Workflow execution:</strong> click <code>Deploy Complete Workflow</code> to start the selected pipeline.</li>
-          </ol>
-        </div>
-        <p>The left panel displays the file browser. The central panel presents workflow configuration and module selection. The right panel contains Runtime, Console, and Preview tabs for progress monitoring, logs, troubleshooting, and result visualization.</p>
+      <section id="en-first">
+        <h2>2. First-Time Setup</h2>
+        <ol>
+          <li>Run <code>TaxaScope.exe</code>.</li>
+          <li>Click <code>Env Setup</code> on first use. This initializes WSL2 and the container engine.</li>
+          <li>On Windows 10, complete the WSL2 helper steps and reboot if prompted.</li>
+          <li>Open TaxaScope again and confirm that the button shows <code>Env Ready</code>.</li>
+          <li>Use <code>VM Config</code> only when the Podman VM needs memory/CPU adjustment or repair.</li>
+          <li>Enable <code>Low Perf Mode</code> on memory-limited systems, especially for CheckM2 and antiSMASH.</li>
+        </ol>
       </section>
 
-      <section id="en-requirements">
-        <h2>3. System Requirements</h2>
-        <ul>
-          <li>Windows 10 or Windows 11</li>
-          <li>WSL2</li>
-          <li>Podman or Docker Desktop configured for Linux containers</li>
-          <li>At least 16 GB RAM for small bacterial genome batches</li>
-          <li>32 GB RAM or higher for CheckM2, antiSMASH, and larger batch workflows</li>
-        </ul>
-        <div class="note">TaxaScope primarily uses Podman on Windows, while the main analysis modules include Docker fallback support when Docker Desktop is installed and running.</div>
-      </section>
-
-      <section id="en-inputs">
-        <h2>4. Input Formats</h2>
+      <section id="en-workdir">
+        <h2>3. Working Directory and Databases</h2>
+        <p>Click <code>Select Work Directory</code> and choose one project folder. TaxaScope stores inputs, NCBI downloads, databases, intermediate files, module outputs, and reports in this folder.</p>
+        <pre><code>project_folder/
+|-- genome_1.fasta
+|-- genome_2.fasta
+|-- metadata.json
+|-- TaxaScope_Databases/
+|   |-- database_sources.json
+|   |-- DATABASE_SOURCES.md
+|   |-- prokka/
+|   |-- dbcan/
+|   |-- busco/
+|   |-- checkm2/
+|   |-- antismash/
+|   `-- phylophlan/
+|-- genome_stats.xlsx
+|-- 2026xxxx_Prokka_Results/
+|-- 2026xxxx_checkm2_results/
+|-- 2026xxxx_busco_results/
+|-- 2026xxxx_dbCAN2_Results/
+|-- 2026xxxx_antiSMASH_Results/
+|-- 2026xxxx_phylophlan_results/
+|-- 2026xxxx_ANI-AAI/
+|-- TaxaScope_Run_Manifest.json
+|-- TaxaScope_Run_Report.md
+`-- TaxaScope_Report.html</code></pre>
+        <p>After selecting the working directory, click <code>Download DBs</code>. This creates <code>TaxaScope_Databases</code> and writes database provenance files used by the reproducibility reports.</p>
         <table>
-          <thead><tr><th>Module</th><th>Input format</th><th>Purpose</th></tr></thead>
-          <tbody>
-            <tr><td>Get Data</td><td>GCA/GCF accessions</td><td>NCBI genome acquisition</td></tr>
-            <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>Assembly statistics</td></tr>
-            <tr><td>Prokka</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>Genome annotation</td></tr>
-            <tr><td>CheckM</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>Genome quality assessment</td></tr>
-            <tr><td>BUSCO</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>Completeness assessment</td></tr>
-            <tr><td>dbCAN</td><td><code>.faa</code></td><td>CAZyme annotation</td></tr>
-            <tr><td>antiSMASH</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code>, <code>.gbk</code>, <code>.gbff</code></td><td>Biosynthetic gene cluster detection</td></tr>
-            <tr><td>PhyloPhlAn</td><td><code>.faa</code></td><td>Whole-genome phylogeny</td></tr>
-            <tr><td>AAI/ANI</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>Pairwise genome similarity</td></tr>
-          </tbody>
+          <tr><th>Database</th><th>Used by</th><th>Recorded source/version</th></tr>
+          <tr><td>Prokka database package</td><td>Prokka</td><td>Prokka v1.14.6 package</td></tr>
+          <tr><td>dbCAN fixed bundle</td><td>dbCAN</td><td><code>db_v5-2_9-13-2025</code></td></tr>
+          <tr><td>BUSCO bacterial lineages</td><td>BUSCO</td><td><code>bacteria_odb12.2025-05-14</code> and <code>bacteria_odb10.2024-01-08</code></td></tr>
+          <tr><td>CheckM2 database</td><td>CheckM</td><td>Zenodo record 14897628</td></tr>
+          <tr><td>antiSMASH databases</td><td>antiSMASH</td><td>standalone-lite 8.0.4 databases</td></tr>
+          <tr><td>PhyloPhlAn marker database</td><td>PhyloPhlAn</td><td><code>phylophlan.tar</code> marker database</td></tr>
         </table>
       </section>
 
-      <section id="en-database">
-        <h2>5. Database Setup</h2>
-        <p>Reference databases are stored under the selected working directory:</p>
-        <pre><code>&lt;working directory&gt;/TaxaScope_Databases</code></pre>
-        <p>The database folder includes <code>database_sources.json</code>, which records database names, versions, download sources, and notes for reproducibility reporting.</p>
+      <section id="en-inputs">
+        <h2>4. Input Data</h2>
+        <h3>NCBI accessions</h3>
+        <p>Open <code>Get Data</code>, enter one GCA/GCF accession per line, select file types, and click <code>Start Download</code>. TaxaScope can retrieve genome FASTA, protein FAA, GBFF, GFF3, and assembly JSON reports. Metadata is preserved as <code>metadata.json</code> when available.</p>
+        <h3>Local files</h3>
+        <p>Local files can be placed directly in the working directory. Protein-based modules require <code>.faa</code> files, which can be downloaded from NCBI or generated by Prokka.</p>
       </section>
 
-      <section id="en-case">
-        <h2>6. Complete Analysis Case</h2>
-        <ol>
-          <li>Open <code>TaxaScope.exe</code>. If this is the first run, click <code>Env Setup</code>. Windows 10 users should use the WSL2 setup helper when prompted, then reboot before analysis.</li>
-          <li>Confirm the environment status. When the interface shows <code>Env Ready</code>, the container runtime is available. Use <code>VM Config</code> only when the Podman VM needs memory/CPU adjustment or repair.</li>
-          <li>Click <code>Select Work Directory</code> and choose a project folder. TaxaScope uses this folder for input files, intermediate files, tool outputs, databases, and reports.</li>
-          <li>Click <code>Download DBs</code> to install reference databases. This creates <code>TaxaScope_Databases</code> and records database source information in <code>database_sources.json</code>.</li>
-          <li>Add input data. Either paste GCA/GCF accessions in <code>Get Data</code> and download assemblies from NCBI, or place local genome/protein sequence files directly in the working directory.</li>
-          <li>Open individual module tabs to review parameters. For example, select dbCAN methods, adjust antiSMASH strictness, or enable Low Perf Mode for memory-limited machines.</li>
-          <li>Open <code>Batch</code> mode, select the modules to run, and keep report generation enabled when a summary report is needed.</li>
-          <li>Click <code>Deploy Complete Workflow</code>. The Runtime tab shows progress, and the Console tab records the exact command-line logs.</li>
-          <li>After completion, select output files from the left file browser. Tables, figures, reports, and tree files can be inspected in the Preview tab.</li>
-          <li>Review the generated reports: <code>TaxaScope_Report.html</code>, <code>TaxaScope_Run_Report.md</code>, and <code>TaxaScope_Run_Manifest.json</code>.</li>
-        </ol>
-        <p>A typical workflow can include Genome Stats, Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, and AAI/ANI.</p>
+      <section id="en-gui">
+        <h2>5. GUI Workflow</h2>
+        <div class="workflow-box">
+          <p><strong>Figure 2. Text-based legend for the TaxaScope GUI workflow.</strong></p>
+          <ol>
+            <li>Click <code>Env Setup</code> for first-time environment installation. Wait for <code>Env Ready</code>.</li>
+            <li>Click <code>Select Work Directory</code> and choose the project folder.</li>
+            <li>Click <code>Download DBs</code> to install reference databases and record database provenance.</li>
+            <li>Use <code>Get Data</code> to download genomes, or place local files in the working directory.</li>
+            <li>Open module tabs to adjust parameters, such as dbCAN methods or antiSMASH strictness.</li>
+            <li>Open <code>Batch</code>. Use <code>Data Acquisition (Optional)</code> for accession-driven runs and <code>Analysis Sequence Setup</code> for module selection.</li>
+            <li>Keep <code>Auto-generate Interactive HTML Research Report</code> enabled when a final report is needed.</li>
+            <li>Click <code>DEPLOY COMPLETE WORKFLOW</code>.</li>
+            <li>Use <code>Runtime</code>, <code>Console</code>, <code>File Browser</code>, and <code>Preview</code> to monitor and inspect results.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="en-modules">
+        <h2>6. Modules and Outputs</h2>
+        <table>
+          <tr><th>Module</th><th>Input</th><th>Main outputs</th></tr>
+          <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>genome_stats.xlsx</code></td></tr>
+          <tr><td>Prokka</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_Prokka_Results</code>, GFF/GBK/FNA/FAA files, merged Excel tables, genome circle plots</td></tr>
+          <tr><td>CheckM</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_checkm2_results</code>, <code>quality_report.tsv</code>, <code>CheckM_Plot.svg</code></td></tr>
+          <tr><td>BUSCO</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_busco_results</code>, short summaries, BUSCO summary plots</td></tr>
+          <tr><td>dbCAN</td><td><code>.faa</code></td><td><code>*_dbCAN2_Results</code>, overview files, merged Excel tables, HMMER/DIAMOND summary plots</td></tr>
+          <tr><td>antiSMASH</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code>, <code>.gbk</code>, <code>.gbff</code></td><td><code>*_antiSMASH_Results</code>, HTML/JSON outputs, summary figures</td></tr>
+          <tr><td>PhyloPhlAn</td><td><code>.faa</code></td><td><code>*_phylophlan_results</code>, tree files including <code>.contree</code>, <code>.treefile</code>, <code>.tre</code>, <code>.nwk</code></td></tr>
+          <tr><td>AAI/ANI</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_ANI-AAI</code>, ANI/AAI tables and heatmaps</td></tr>
+        </table>
       </section>
 
       <section id="en-reports">
-        <h2>7. Reproducibility Reports</h2>
+        <h2>7. Reports and Reproducibility</h2>
+        <p>TaxaScope writes three reviewer-friendly reproducibility outputs:</p>
         <ul>
-          <li><code>TaxaScope_Run_Manifest.json</code>: machine-readable run manifest.</li>
-          <li><code>TaxaScope_Run_Report.md</code>: human-readable Markdown run report.</li>
-          <li><code>TaxaScope_Report.html</code>: interactive HTML report with results and provenance.</li>
+          <li><code>TaxaScope_Run_Manifest.json</code>: machine-readable manifest with software, database, parameter, runtime, input, and output metadata.</li>
+          <li><code>TaxaScope_Run_Report.md</code>: readable Markdown summary for supplementary methods and reviewer responses.</li>
+          <li><code>TaxaScope_Report.html</code>: interactive report aggregating tables, plots, runtime summaries, and reproducibility information.</li>
         </ul>
       </section>
 
       <section id="en-troubleshooting">
         <h2>8. Troubleshooting</h2>
-        <p>If the container runtime is unavailable, install or start Podman or Docker Desktop. If databases are missing, run Download DBs and confirm that <code>TaxaScope_Databases/database_sources.json</code> exists. If a module fails because of memory, enable Low Perf Mode or increase container runtime memory allocation.</p>
+        <ul>
+          <li>If <code>Env Ready</code> does not appear, start Podman or Docker Desktop and reopen TaxaScope. Use <code>VM Config</code> if the Podman VM needs repair.</li>
+          <li>If a database is missing, select the same working directory and click <code>Download DBs</code> again.</li>
+          <li>If no files are detected, check file extensions. dbCAN and PhyloPhlAn require <code>.faa</code>.</li>
+          <li>If NCBI download fails, retry with smaller accession batches, for example 5 to 8 genomes.</li>
+          <li>If a module fails because of memory, enable <code>Low Perf Mode</code> or increase Podman VM memory through <code>VM Config</code>.</li>
+        </ul>
       </section>
     </div>
 
     <div id="zh" class="content">
       <section>
         <h2>文档索引</h2>
-        <p>这是当前 TaxaScope GitHub 用户手册的三语言 HTML 版本。</p>
+        <p>这是当前 TaxaScope GUI 的三语言 HTML 操作手册。本文档不依赖外部图片，下载单个 HTML 文件后也可以正常阅读。</p>
         <div class="toc">
-          <a href="#zh-overview">软件概述</a>
-          <a href="#zh-gui">GUI 工作流</a>
-          <a href="#zh-requirements">系统要求</a>
-          <a href="#zh-inputs">输入格式</a>
-          <a href="#zh-database">数据库设置</a>
-          <a href="#zh-case">完整分析案例</a>
-          <a href="#zh-reports">复现性报告</a>
-          <a href="#zh-troubleshooting">故障排查</a>
+          <a href="#zh-overview">1. 软件概述</a>
+          <a href="#zh-first">2. 首次环境设置</a>
+          <a href="#zh-workdir">3. 工作目录和数据库</a>
+          <a href="#zh-inputs">4. 输入数据</a>
+          <a href="#zh-gui">5. GUI 工作流</a>
+          <a href="#zh-modules">6. 模块和输出</a>
+          <a href="#zh-reports">7. 复现性报告</a>
+          <a href="#zh-troubleshooting">8. 故障排查</a>
         </div>
       </section>
 
       <section id="zh-overview">
         <h2>1. 软件概述</h2>
-        <p>TaxaScope 是一个面向 Windows 的微生物基因组分析 GUI 工具。它将容器化执行、工作目录管理、数据库追踪、批量流程配置、结果预览和结构化运行报告整合到一个桌面界面中。</p>
-        <ul>
-          <li>基因组统计和注释</li>
-          <li>基因组质量和完整性评估</li>
-          <li>CAZyme 和次级代谢基因簇分析</li>
-          <li>ANI/AAI 比较和全基因组系统发育分析</li>
-          <li>HTML、Markdown 和 JSON 复现性报告</li>
-        </ul>
+        <p>TaxaScope 是一个面向 Windows 的微生物基因组分析桌面 GUI。它把 WSL2、Podman/Docker、容器化分析工具、工作目录管理、结果预览和复现性报告整合到一个界面中。</p>
+        <p>推荐用户按下面顺序操作：</p>
+        <pre><code>打开 TaxaScope.exe
+-> 点击 Env Setup 安装/初始化环境
+-> 点击 Select Work Directory 选择项目目录
+-> 点击 Download DBs 下载数据库
+-> 用 Get Data 下载 NCBI 数据，或放入本地文件
+-> 配置各分析模块参数
+-> 进入 Batch
+-> 点击 DEPLOY COMPLETE WORKFLOW
+-> 查看 Runtime、Console、Preview 和报告</code></pre>
       </section>
 
-      <section id="zh-gui">
-        <h2>2. 图形界面和工作流配置</h2>
-        <div class="workflow-box">
-          <p><strong>图 2. TaxaScope 图形用户界面和工作流配置。</strong></p>
-          <ol>
-            <li><strong>环境初始化：</strong>首次使用时点击 <code>Env Setup</code>，初始化 WSL2 和容器引擎。这个步骤只需要做一次。</li>
-            <li><strong>选择工作目录：</strong>点击 <code>Select Work Directory</code>，选择项目文件夹。输入、中间文件和输出都会保存在这里。</li>
-            <li><strong>下载数据库：</strong>点击 <code>Download DBs</code>，把所需参考数据库安装到当前工作目录。</li>
-            <li><strong>配置参数：</strong>通过 Prokka、CheckM、BUSCO、dbCAN、antiSMASH、PhyloPhlAn、AAI/ANI 等模块标签页调整工具参数。</li>
-            <li><strong>获取数据：</strong>在 <code>Get Data</code> 中粘贴 GCA/GCF accession 从 NCBI 下载基因组，也可以直接把本地 FASTA/FA/FNA/FAA 文件放进工作目录。</li>
-            <li><strong>选择批量流程：</strong>进入 <code>Batch</code> 模式，勾选需要按顺序运行的模块。</li>
-            <li><strong>执行工作流：</strong>点击 <code>Deploy Complete Workflow</code> 启动所选流程。</li>
-          </ol>
-        </div>
-        <p>左侧面板是文件浏览器，显示工作目录中的输入、中间文件和输出。中间面板用于配置流程和选择分析模块。右侧面板包含 Runtime、Console 和 Preview 三个标签，用于查看进度、日志、故障排查和结果预览。</p>
+      <section id="zh-first">
+        <h2>2. 首次环境设置</h2>
+        <ol>
+          <li>运行 <code>TaxaScope.exe</code>。</li>
+          <li>首次使用时点击 <code>Env Setup</code>。该步骤会初始化 WSL2 和容器运行环境。</li>
+          <li>Windows 10 用户如果按提示安装 WSL2 组件，完成后需要重启电脑。</li>
+          <li>重新打开 TaxaScope，确认按钮显示为 <code>Env Ready</code>。</li>
+          <li><code>VM Config</code> 不是常规第一步，只在 Podman VM 需要调整内存、CPU 或修复时使用。</li>
+          <li>内存较低的机器建议开启 <code>Low Perf Mode</code>，尤其是运行 CheckM2 和 antiSMASH 时。</li>
+        </ol>
       </section>
 
-      <section id="zh-requirements">
-        <h2>3. 系统要求</h2>
-        <ul>
-          <li>Windows 10 或 Windows 11</li>
-          <li>WSL2</li>
-          <li>Podman 或配置为 Linux containers 的 Docker Desktop</li>
-          <li>小规模细菌基因组分析建议至少 16 GB 内存</li>
-          <li>CheckM2、antiSMASH 和较大批量流程建议 32 GB 或更高内存</li>
-        </ul>
-        <div class="note">TaxaScope 在 Windows 上默认优先使用 Podman；主要分析模块在 Docker Desktop 已安装并运行时也支持 Docker fallback。</div>
-      </section>
-
-      <section id="zh-inputs">
-        <h2>4. 输入格式</h2>
+      <section id="zh-workdir">
+        <h2>3. 工作目录和数据库</h2>
+        <p>点击 <code>Select Work Directory</code> 选择一个项目文件夹。TaxaScope 会把输入文件、NCBI 下载文件、数据库、中间文件、各模块输出和报告都放在这个目录里。</p>
+        <pre><code>project_folder/
+|-- genome_1.fasta
+|-- genome_2.fasta
+|-- metadata.json
+|-- TaxaScope_Databases/
+|   |-- database_sources.json
+|   |-- DATABASE_SOURCES.md
+|   |-- prokka/
+|   |-- dbcan/
+|   |-- busco/
+|   |-- checkm2/
+|   |-- antismash/
+|   `-- phylophlan/
+|-- genome_stats.xlsx
+|-- 2026xxxx_Prokka_Results/
+|-- 2026xxxx_checkm2_results/
+|-- 2026xxxx_busco_results/
+|-- 2026xxxx_dbCAN2_Results/
+|-- 2026xxxx_antiSMASH_Results/
+|-- 2026xxxx_phylophlan_results/
+|-- 2026xxxx_ANI-AAI/
+|-- TaxaScope_Run_Manifest.json
+|-- TaxaScope_Run_Report.md
+`-- TaxaScope_Report.html</code></pre>
+        <p>选择工作目录后，点击 <code>Download DBs</code>。程序会创建 <code>TaxaScope_Databases</code>，并写入数据库来源和版本记录，用于后续复现性报告。</p>
         <table>
-          <thead><tr><th>模块</th><th>输入格式</th><th>用途</th></tr></thead>
-          <tbody>
-            <tr><td>Get Data</td><td>GCA/GCF accession</td><td>从 NCBI 获取基因组</td></tr>
-            <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>组装统计</td></tr>
-            <tr><td>Prokka</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>基因组注释</td></tr>
-            <tr><td>CheckM</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>基因组质量评估</td></tr>
-            <tr><td>BUSCO</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>完整性评估</td></tr>
-            <tr><td>dbCAN</td><td><code>.faa</code></td><td>CAZyme 注释</td></tr>
-            <tr><td>antiSMASH</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code>, <code>.gbk</code>, <code>.gbff</code></td><td>次级代谢基因簇检测</td></tr>
-            <tr><td>PhyloPhlAn</td><td><code>.faa</code></td><td>全基因组系统发育树</td></tr>
-            <tr><td>AAI/ANI</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>基因组相似性比较</td></tr>
-          </tbody>
+          <tr><th>数据库</th><th>用于模块</th><th>当前记录的来源/版本</th></tr>
+          <tr><td>Prokka database package</td><td>Prokka</td><td>Prokka v1.14.6 package</td></tr>
+          <tr><td>dbCAN fixed bundle</td><td>dbCAN</td><td><code>db_v5-2_9-13-2025</code></td></tr>
+          <tr><td>BUSCO bacterial lineages</td><td>BUSCO</td><td><code>bacteria_odb12.2025-05-14</code> 和 <code>bacteria_odb10.2024-01-08</code></td></tr>
+          <tr><td>CheckM2 database</td><td>CheckM</td><td>Zenodo record 14897628</td></tr>
+          <tr><td>antiSMASH databases</td><td>antiSMASH</td><td>standalone-lite 8.0.4 databases</td></tr>
+          <tr><td>PhyloPhlAn marker database</td><td>PhyloPhlAn</td><td><code>phylophlan.tar</code> marker database</td></tr>
         </table>
       </section>
 
-      <section id="zh-database">
-        <h2>5. 数据库设置</h2>
-        <p>参考数据库存放在所选工作目录下：</p>
-        <pre><code>&lt;working directory&gt;/TaxaScope_Databases</code></pre>
-        <p>其中 <code>database_sources.json</code> 用于记录数据库名称、版本、下载来源和备注，并写入复现性报告。</p>
+      <section id="zh-inputs">
+        <h2>4. 输入数据</h2>
+        <h3>NCBI accession 下载</h3>
+        <p>进入 <code>Get Data</code> 标签页，每行输入一个 GCA/GCF accession，选择需要的文件类型，然后点击 <code>Start Download</code>。TaxaScope 可下载基因组 FASTA、蛋白 FAA、GBFF、GFF3 和 assembly JSON report。可用的 NCBI 元数据会保存在 <code>metadata.json</code>。</p>
+        <h3>本地文件</h3>
+        <p>也可以直接把本地文件放进工作目录。需要注意，dbCAN 和 PhyloPhlAn 使用蛋白序列 <code>.faa</code>；这些文件可以从 NCBI 下载，也可以先运行 Prokka 生成。</p>
       </section>
 
-      <section id="zh-case">
-        <h2>6. 完整分析案例</h2>
-        <ol>
-          <li>打开 <code>TaxaScope.exe</code>。如果是第一次使用，先点击 <code>Env Setup</code>。Windows 10 用户按提示完成 WSL2 设置后需要重启电脑。</li>
-          <li>确认环境状态。界面显示 <code>Env Ready</code> 后说明容器运行环境可用。只有需要调整 Podman VM 内存、CPU 或修复环境时才点击 <code>VM Config</code>。</li>
-          <li>点击 <code>Select Work Directory</code>，选择项目文件夹。TaxaScope 会把输入文件、中间文件、输出、数据库和报告都放在这个目录下。</li>
-          <li>点击 <code>Download DBs</code> 下载参考数据库。程序会创建 <code>TaxaScope_Databases</code>，并在 <code>database_sources.json</code> 中记录数据库来源和版本。</li>
-          <li>添加输入数据。可以在 <code>Get Data</code> 中粘贴 GCA/GCF accession 从 NCBI 下载，也可以直接把本地基因组或蛋白序列文件放入工作目录。</li>
-          <li>进入单个模块标签页检查参数。例如选择 dbCAN 方法、设置 antiSMASH strictness，或在内存较低的机器上开启 Low Perf Mode。</li>
-          <li>进入 <code>Batch</code> 模式，勾选需要运行的模块；如果需要汇总报告，保持报告生成选项开启。</li>
-          <li>点击 <code>Deploy Complete Workflow</code> 开始运行。Runtime 标签显示进度，Console 标签记录命令行日志。</li>
-          <li>运行结束后，在左侧文件浏览器选择输出文件。表格、图片、报告和树文件可在 Preview 标签中查看。</li>
-          <li>检查生成的报告：<code>TaxaScope_Report.html</code>、<code>TaxaScope_Run_Report.md</code> 和 <code>TaxaScope_Run_Manifest.json</code>。</li>
-        </ol>
-        <p>常见流程包括 Genome Stats、Prokka、CheckM、BUSCO、dbCAN、antiSMASH、PhyloPhlAn 和 AAI/ANI。</p>
+      <section id="zh-gui">
+        <h2>5. GUI 工作流</h2>
+        <div class="workflow-box">
+          <p><strong>图 2. TaxaScope GUI 工作流文字说明。</strong></p>
+          <ol>
+            <li>点击 <code>Env Setup</code> 完成首次环境安装，等待状态变为 <code>Env Ready</code>。</li>
+            <li>点击 <code>Select Work Directory</code>，选择本次分析的项目文件夹。</li>
+            <li>点击 <code>Download DBs</code>，下载参考数据库并记录数据库来源信息。</li>
+            <li>通过 <code>Get Data</code> 下载基因组，或把本地文件直接放入工作目录。</li>
+            <li>进入各模块标签页调整参数，例如 dbCAN 方法、antiSMASH strictness、Low Perf Mode 等。</li>
+            <li>进入 <code>Batch</code>。左侧 <code>Data Acquisition (Optional)</code> 可填写 accession；右侧 <code>Analysis Sequence Setup</code> 勾选要顺序运行的模块。</li>
+            <li>如果需要汇总报告，保持 <code>Auto-generate Interactive HTML Research Report</code> 开启。</li>
+            <li>点击 <code>DEPLOY COMPLETE WORKFLOW</code> 启动完整流程。</li>
+            <li>通过 <code>Runtime</code>、<code>Console</code>、左侧文件浏览器和 <code>Preview</code> 查看进度、日志和结果。</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="zh-modules">
+        <h2>6. 模块和输出</h2>
+        <table>
+          <tr><th>模块</th><th>输入</th><th>主要输出</th></tr>
+          <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>genome_stats.xlsx</code></td></tr>
+          <tr><td>Prokka</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_Prokka_Results</code>、GFF/GBK/FNA/FAA、合并 Excel、基因组圈图</td></tr>
+          <tr><td>CheckM</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_checkm2_results</code>、<code>quality_report.tsv</code>、<code>CheckM_Plot.svg</code></td></tr>
+          <tr><td>BUSCO</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_busco_results</code>、short summary、BUSCO 汇总图</td></tr>
+          <tr><td>dbCAN</td><td><code>.faa</code></td><td><code>*_dbCAN2_Results</code>、overview、合并 Excel、HMMER/DIAMOND 汇总图</td></tr>
+          <tr><td>antiSMASH</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code>, <code>.gbk</code>, <code>.gbff</code></td><td><code>*_antiSMASH_Results</code>、HTML/JSON 结果、汇总图</td></tr>
+          <tr><td>PhyloPhlAn</td><td><code>.faa</code></td><td><code>*_phylophlan_results</code>、<code>.contree</code>、<code>.treefile</code>、<code>.tre</code>、<code>.nwk</code> 等树文件</td></tr>
+          <tr><td>AAI/ANI</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_ANI-AAI</code>、ANI/AAI 表格和热图</td></tr>
+        </table>
       </section>
 
       <section id="zh-reports">
         <h2>7. 复现性报告</h2>
+        <p>TaxaScope 会输出三类适合审稿和复现记录的文件：</p>
         <ul>
-          <li><code>TaxaScope_Run_Manifest.json</code>：机器可读的运行记录。</li>
-          <li><code>TaxaScope_Run_Report.md</code>：人工可读的 Markdown 运行报告。</li>
-          <li><code>TaxaScope_Report.html</code>：包含结果和 provenance 的交互式 HTML 报告。</li>
+          <li><code>TaxaScope_Run_Manifest.json</code>：机器可读，记录软件、数据库、参数、运行时间、输入和输出。</li>
+          <li><code>TaxaScope_Run_Report.md</code>：人类可读，可用于补充材料、方法描述和回复审稿人。</li>
+          <li><code>TaxaScope_Report.html</code>：交互式汇总报告，整合表格、图片、运行时间和复现性信息。</li>
         </ul>
       </section>
 
       <section id="zh-troubleshooting">
         <h2>8. 故障排查</h2>
-        <p>如果容器运行时不可用，请启动或安装 Podman/Docker Desktop。如果数据库缺失，请运行 Download DBs 并确认 <code>TaxaScope_Databases/database_sources.json</code> 存在。如果模块因内存不足失败，请启用 Low Perf Mode 或提高容器运行时内存。</p>
+        <ul>
+          <li>如果没有显示 <code>Env Ready</code>，先启动 Podman 或 Docker Desktop，再重新打开 TaxaScope；Podman VM 异常时使用 <code>VM Config</code>。</li>
+          <li>如果提示数据库缺失，确认当前工作目录下有 <code>TaxaScope_Databases</code>，然后再次点击 <code>Download DBs</code>。</li>
+          <li>如果检测不到文件，检查扩展名；dbCAN 和 PhyloPhlAn 需要 <code>.faa</code>。</li>
+          <li>如果 NCBI 下载失败，建议缩小 accession 批次，例如每次 5 到 8 个基因组。</li>
+          <li>如果模块因内存失败，开启 <code>Low Perf Mode</code>，或通过 <code>VM Config</code> 增加 Podman VM 内存。</li>
+        </ul>
       </section>
     </div>
 
     <div id="ko" class="content">
       <section>
         <h2>문서 색인</h2>
-        <p>이 HTML 문서는 현재 TaxaScope GitHub 사용자 설명서의 다국어 버전입니다.</p>
+        <p>이 HTML 문서는 현재 TaxaScope GUI의 다국어 사용자 설명서입니다. 외부 이미지에 의존하지 않으므로 단일 HTML 파일로 내려받아 로컬에서 열 수 있습니다.</p>
         <div class="toc">
-          <a href="#ko-overview">개요</a>
-          <a href="#ko-gui">GUI 워크플로</a>
-          <a href="#ko-requirements">시스템 요구사항</a>
-          <a href="#ko-inputs">입력 형식</a>
-          <a href="#ko-database">데이터베이스 설정</a>
-          <a href="#ko-case">전체 분석 예제</a>
-          <a href="#ko-reports">재현성 보고서</a>
-          <a href="#ko-troubleshooting">문제 해결</a>
+          <a href="#ko-overview">1. 개요</a>
+          <a href="#ko-first">2. 최초 환경 설정</a>
+          <a href="#ko-workdir">3. 작업 폴더와 데이터베이스</a>
+          <a href="#ko-inputs">4. 입력 데이터</a>
+          <a href="#ko-gui">5. GUI 워크플로</a>
+          <a href="#ko-modules">6. 모듈과 출력</a>
+          <a href="#ko-reports">7. 재현성 보고서</a>
+          <a href="#ko-troubleshooting">8. 문제 해결</a>
         </div>
       </section>
 
       <section id="ko-overview">
         <h2>1. 개요</h2>
-        <p>TaxaScope는 Windows 환경에서 미생물 유전체 분석을 수행하기 위한 GUI 도구입니다. 컨테이너 실행, 작업 폴더 관리, 데이터베이스 추적, 배치 워크플로 설정, 결과 미리보기, 구조화된 실행 보고서를 하나의 인터페이스로 제공합니다.</p>
-        <ul>
-          <li>유전체 통계 및 주석</li>
-          <li>유전체 품질 및 완전성 평가</li>
-          <li>CAZyme 및 생합성 유전자 클러스터 분석</li>
-          <li>ANI/AAI 비교 및 전장 유전체 계통분석</li>
-          <li>HTML, Markdown, JSON 재현성 보고서</li>
-        </ul>
+        <p>TaxaScope는 Windows용 미생물 유전체 분석 GUI입니다. WSL2, Podman/Docker, 컨테이너 기반 분석 도구, 작업 폴더 관리, 결과 미리보기, 재현성 보고를 하나의 데스크톱 워크플로로 통합합니다.</p>
+        <pre><code>TaxaScope.exe 실행
+-> Env Setup
+-> Select Work Directory
+-> Download DBs
+-> Get Data 또는 로컬 파일 추가
+-> 모듈 매개변수 설정
+-> Batch
+-> DEPLOY COMPLETE WORKFLOW
+-> Runtime, Console, Preview, 보고서 확인</code></pre>
       </section>
 
-      <section id="ko-gui">
-        <h2>2. GUI 및 워크플로 설정</h2>
-        <div class="workflow-box">
-          <p><strong>그림 2. TaxaScope GUI 및 워크플로 설정.</strong></p>
-          <ol>
-            <li><strong>환경 설정:</strong> 처음 사용할 때 <code>Env Setup</code>을 클릭하여 WSL2와 컨테이너 엔진을 초기화합니다. 이 단계는 한 번만 필요합니다.</li>
-            <li><strong>작업 폴더 선택:</strong> <code>Select Work Directory</code>를 클릭하고 입력, 중간 파일, 출력이 저장될 프로젝트 폴더를 선택합니다.</li>
-            <li><strong>데이터베이스 다운로드:</strong> <code>Download DBs</code>를 클릭하여 필요한 참조 데이터베이스를 작업 폴더에 설치합니다.</li>
-            <li><strong>매개변수 설정:</strong> Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, AAI/ANI 탭에서 도구별 설정을 조정합니다.</li>
-            <li><strong>데이터 수집:</strong> <code>Get Data</code>에서 GCA/GCF accession을 붙여 넣어 NCBI에서 유전체를 다운로드하거나, 로컬 FASTA/FA/FNA/FAA 파일을 작업 폴더에 넣습니다.</li>
-            <li><strong>배치 워크플로 선택:</strong> <code>Batch</code> 모드에서 순차적으로 실행할 모듈을 선택합니다.</li>
-            <li><strong>워크플로 실행:</strong> <code>Deploy Complete Workflow</code>를 클릭하여 선택한 파이프라인을 시작합니다.</li>
-          </ol>
-        </div>
-        <p>왼쪽 패널은 파일 브라우저입니다. 가운데 패널은 워크플로 및 모듈 설정을 표시합니다. 오른쪽 패널은 Runtime, Console, Preview 탭을 통해 진행 상황, 로그, 문제 해결, 결과 미리보기를 제공합니다.</p>
+      <section id="ko-first">
+        <h2>2. 최초 환경 설정</h2>
+        <ol>
+          <li><code>TaxaScope.exe</code>를 실행합니다.</li>
+          <li>처음 사용할 때 <code>Env Setup</code>을 클릭하여 WSL2와 컨테이너 런타임을 초기화합니다.</li>
+          <li>Windows 10에서는 WSL2 설정 후 재부팅이 필요할 수 있습니다.</li>
+          <li>다시 실행한 뒤 <code>Env Ready</code> 상태를 확인합니다.</li>
+          <li><code>VM Config</code>는 Podman VM 메모리/CPU 조정 또는 복구가 필요할 때 사용합니다.</li>
+          <li>메모리가 제한된 시스템에서는 <code>Low Perf Mode</code>를 사용합니다.</li>
+        </ol>
       </section>
 
-      <section id="ko-requirements">
-        <h2>3. 시스템 요구사항</h2>
-        <ul>
-          <li>Windows 10 또는 Windows 11</li>
-          <li>WSL2</li>
-          <li>Linux containers로 설정된 Podman 또는 Docker Desktop</li>
-          <li>소규모 세균 유전체 배치에는 최소 16 GB RAM 권장</li>
-          <li>CheckM2, antiSMASH 및 대규모 배치에는 32 GB 이상 권장</li>
-        </ul>
-        <div class="note">TaxaScope는 Windows에서 Podman을 우선 사용하지만, 주요 분석 모듈은 Docker Desktop이 실행 중인 경우 Docker fallback을 지원합니다.</div>
-      </section>
-
-      <section id="ko-inputs">
-        <h2>4. 입력 형식</h2>
+      <section id="ko-workdir">
+        <h2>3. 작업 폴더와 데이터베이스</h2>
+        <p><code>Select Work Directory</code>를 클릭하여 프로젝트 폴더를 선택합니다. 입력 파일, NCBI 다운로드, 데이터베이스, 중간 파일, 모듈 출력, 보고서가 이 폴더에 저장됩니다.</p>
+        <p>그 다음 <code>Download DBs</code>를 클릭하여 <code>TaxaScope_Databases</code>를 만들고 데이터베이스 출처와 버전 정보를 기록합니다.</p>
         <table>
-          <thead><tr><th>모듈</th><th>입력 형식</th><th>목적</th></tr></thead>
-          <tbody>
-            <tr><td>Get Data</td><td>GCA/GCF accession</td><td>NCBI 유전체 다운로드</td></tr>
-            <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>조립 통계</td></tr>
-            <tr><td>Prokka</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>유전체 주석</td></tr>
-            <tr><td>CheckM</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>유전체 품질 평가</td></tr>
-            <tr><td>BUSCO</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>완전성 평가</td></tr>
-            <tr><td>dbCAN</td><td><code>.faa</code></td><td>CAZyme 주석</td></tr>
-            <tr><td>antiSMASH</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code>, <code>.gbk</code>, <code>.gbff</code></td><td>생합성 유전자 클러스터 탐지</td></tr>
-            <tr><td>PhyloPhlAn</td><td><code>.faa</code></td><td>전장 유전체 계통분석</td></tr>
-            <tr><td>AAI/ANI</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td>유전체 유사도 비교</td></tr>
-          </tbody>
+          <tr><th>데이터베이스</th><th>사용 모듈</th><th>기록 버전</th></tr>
+          <tr><td>Prokka database package</td><td>Prokka</td><td>Prokka v1.14.6 package</td></tr>
+          <tr><td>dbCAN fixed bundle</td><td>dbCAN</td><td><code>db_v5-2_9-13-2025</code></td></tr>
+          <tr><td>BUSCO bacterial lineages</td><td>BUSCO</td><td><code>bacteria_odb12.2025-05-14</code>, <code>bacteria_odb10.2024-01-08</code></td></tr>
+          <tr><td>CheckM2 database</td><td>CheckM</td><td>Zenodo record 14897628</td></tr>
+          <tr><td>antiSMASH databases</td><td>antiSMASH</td><td>standalone-lite 8.0.4 databases</td></tr>
+          <tr><td>PhyloPhlAn marker database</td><td>PhyloPhlAn</td><td><code>phylophlan.tar</code></td></tr>
         </table>
       </section>
 
-      <section id="ko-database">
-        <h2>5. 데이터베이스 설정</h2>
-        <p>참조 데이터베이스는 선택한 작업 폴더 아래에 저장됩니다.</p>
-        <pre><code>&lt;working directory&gt;/TaxaScope_Databases</code></pre>
-        <p><code>database_sources.json</code> 파일은 데이터베이스 이름, 버전, 다운로드 출처, 메모를 기록하며 재현성 보고서에 사용됩니다.</p>
+      <section id="ko-inputs">
+        <h2>4. 입력 데이터</h2>
+        <p><code>Get Data</code> 탭에서 GCA/GCF accession을 한 줄에 하나씩 입력하고 <code>Start Download</code>를 클릭합니다. 또는 FASTA/FAA/GBK/GBFF 파일을 작업 폴더에 직접 넣습니다. dbCAN과 PhyloPhlAn은 <code>.faa</code> 단백질 파일을 사용합니다.</p>
       </section>
 
-      <section id="ko-case">
-        <h2>6. 전체 분석 예제</h2>
-        <ol>
-          <li><code>TaxaScope.exe</code>를 실행합니다. 처음 사용하는 경우 <code>Env Setup</code>을 클릭합니다. Windows 10 사용자는 WSL2 설정 후 재부팅해야 합니다.</li>
-          <li>환경 상태를 확인합니다. 인터페이스에 <code>Env Ready</code>가 표시되면 컨테이너 런타임을 사용할 수 있습니다. Podman VM의 메모리/CPU 조정이나 복구가 필요할 때만 <code>VM Config</code>를 사용합니다.</li>
-          <li><code>Select Work Directory</code>를 클릭하여 프로젝트 폴더를 선택합니다. 입력, 중간 파일, 출력, 데이터베이스, 보고서가 이 폴더에 저장됩니다.</li>
-          <li><code>Download DBs</code>를 클릭하여 참조 데이터베이스를 설치합니다. <code>TaxaScope_Databases</code> 폴더와 <code>database_sources.json</code> 기록 파일이 생성됩니다.</li>
-          <li>입력 데이터를 추가합니다. <code>Get Data</code>에 GCA/GCF accession을 입력하여 NCBI에서 다운로드하거나, 로컬 유전체/단백질 서열 파일을 작업 폴더에 넣습니다.</li>
-          <li>각 모듈 탭에서 매개변수를 확인합니다. 예를 들어 dbCAN 방법 선택, antiSMASH strictness 설정, 메모리가 부족한 장비에서 Low Perf Mode 사용 등이 가능합니다.</li>
-          <li><code>Batch</code> 모드에서 실행할 모듈을 선택하고, 요약 보고서가 필요한 경우 보고서 생성 옵션을 유지합니다.</li>
-          <li><code>Deploy Complete Workflow</code>를 클릭합니다. Runtime 탭은 진행 상황을 표시하고 Console 탭은 명령줄 로그를 기록합니다.</li>
-          <li>완료 후 왼쪽 파일 브라우저에서 출력 파일을 선택합니다. 표, 그림, 보고서, 트리 파일은 Preview 탭에서 확인할 수 있습니다.</li>
-          <li>생성된 보고서 <code>TaxaScope_Report.html</code>, <code>TaxaScope_Run_Report.md</code>, <code>TaxaScope_Run_Manifest.json</code>을 확인합니다.</li>
-        </ol>
-        <p>일반적인 워크플로는 Genome Stats, Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, AAI/ANI를 포함할 수 있습니다.</p>
+      <section id="ko-gui">
+        <h2>5. GUI 워크플로</h2>
+        <div class="workflow-box">
+          <p><strong>그림 2. TaxaScope GUI 워크플로의 텍스트 설명.</strong></p>
+          <ol>
+            <li><code>Env Setup</code>을 클릭하고 <code>Env Ready</code> 상태를 확인합니다.</li>
+            <li><code>Select Work Directory</code>를 클릭하여 프로젝트 폴더를 선택합니다.</li>
+            <li><code>Download DBs</code>로 참조 데이터베이스를 설치합니다.</li>
+            <li><code>Get Data</code> 또는 로컬 파일로 입력 데이터를 준비합니다.</li>
+            <li>각 모듈 탭에서 매개변수를 조정합니다.</li>
+            <li><code>Batch</code>에서 <code>Data Acquisition (Optional)</code>과 <code>Analysis Sequence Setup</code>을 설정합니다.</li>
+            <li><code>DEPLOY COMPLETE WORKFLOW</code>를 클릭합니다.</li>
+            <li><code>Runtime</code>, <code>Console</code>, <code>File Browser</code>, <code>Preview</code>에서 진행 상황과 결과를 확인합니다.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="ko-modules">
+        <h2>6. 모듈과 출력</h2>
+        <table>
+          <tr><th>모듈</th><th>입력</th><th>주요 출력</th></tr>
+          <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>genome_stats.xlsx</code></td></tr>
+          <tr><td>Prokka</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_Prokka_Results</code>, GFF/GBK/FNA/FAA, Excel, genome circle plots</td></tr>
+          <tr><td>CheckM</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_checkm2_results</code>, <code>quality_report.tsv</code>, <code>CheckM_Plot.svg</code></td></tr>
+          <tr><td>BUSCO</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_busco_results</code>, summary files and plots</td></tr>
+          <tr><td>dbCAN</td><td><code>.faa</code></td><td><code>*_dbCAN2_Results</code>, overview files, Excel, summary plots</td></tr>
+          <tr><td>antiSMASH</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code>, <code>.gbk</code>, <code>.gbff</code></td><td><code>*_antiSMASH_Results</code>, HTML/JSON outputs</td></tr>
+          <tr><td>PhyloPhlAn</td><td><code>.faa</code></td><td><code>*_phylophlan_results</code>, tree files</td></tr>
+          <tr><td>AAI/ANI</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>*_ANI-AAI</code>, tables and heatmaps</td></tr>
+        </table>
       </section>
 
       <section id="ko-reports">
         <h2>7. 재현성 보고서</h2>
         <ul>
-          <li><code>TaxaScope_Run_Manifest.json</code>: 기계 판독 가능한 실행 기록.</li>
-          <li><code>TaxaScope_Run_Report.md</code>: 사람이 읽을 수 있는 Markdown 실행 보고서.</li>
-          <li><code>TaxaScope_Report.html</code>: 결과와 provenance를 포함하는 대화형 HTML 보고서.</li>
+          <li><code>TaxaScope_Run_Manifest.json</code>: 소프트웨어, 데이터베이스, 매개변수, 입력, 출력 정보를 담은 기계 판독형 기록.</li>
+          <li><code>TaxaScope_Run_Report.md</code>: 보충 방법과 심사 답변에 사용할 수 있는 Markdown 요약.</li>
+          <li><code>TaxaScope_Report.html</code>: 표, 그림, 실행 시간, 재현성 정보를 통합한 HTML 보고서.</li>
         </ul>
       </section>
 
       <section id="ko-troubleshooting">
         <h2>8. 문제 해결</h2>
-        <p>컨테이너 런타임을 사용할 수 없으면 Podman 또는 Docker Desktop을 설치하거나 시작하십시오. 데이터베이스가 없으면 Download DBs를 실행하고 <code>TaxaScope_Databases/database_sources.json</code> 파일을 확인하십시오. 메모리 부족으로 실패하면 Low Perf Mode를 켜거나 컨테이너 런타임 메모리를 늘리십시오.</p>
+        <ul>
+          <li><code>Env Ready</code>가 보이지 않으면 Podman 또는 Docker Desktop을 시작하고 TaxaScope를 다시 실행합니다.</li>
+          <li>데이터베이스가 없다고 나오면 같은 작업 폴더에서 <code>Download DBs</code>를 다시 실행합니다.</li>
+          <li>파일이 감지되지 않으면 확장자를 확인합니다. dbCAN과 PhyloPhlAn은 <code>.faa</code>가 필요합니다.</li>
+          <li>NCBI 다운로드 실패 시 accession 수를 줄여 다시 시도합니다.</li>
+          <li>메모리 부족 시 <code>Low Perf Mode</code>를 켜거나 <code>VM Config</code>에서 VM 메모리를 늘립니다.</li>
+        </ul>
       </section>
     </div>
   </main>
 
-  <footer>TaxaScope KRIBB-KCTC User Guide. Updated for GitHub documentation and reviewer-facing workflow guidance.</footer>
+  <footer>TaxaScope KRIBB-KCTC User Guide</footer>
 
   <script>
-    document.querySelectorAll(".lang-switcher button").forEach((button) => {
+    const buttons = document.querySelectorAll(".lang-switcher button");
+    const contents = document.querySelectorAll(".content");
+    buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        const lang = button.getAttribute("data-lang");
-        document.querySelectorAll(".lang-switcher button").forEach((item) => item.classList.remove("active"));
-        document.querySelectorAll(".content").forEach((section) => section.classList.remove("active"));
+        buttons.forEach((item) => item.classList.remove("active"));
+        contents.forEach((item) => item.classList.remove("active"));
         button.classList.add("active");
-        document.getElementById(lang).classList.add("active");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        document.getElementById(button.dataset.lang).classList.add("active");
       });
     });
   </script>

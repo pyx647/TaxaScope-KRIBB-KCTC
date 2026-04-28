@@ -19,7 +19,7 @@ The maintained documentation is centralized in the `docs/` directory.
 - [Software Availability](docs/Software_Availability.md)
 - [Tool Reproducibility](docs/Tool_Reproducibility.md)
 
-The user manual includes a complete end-to-end analysis case tutorial, text-only Figure 2 GUI workflow explanation, working directory and input format guidance, database setup and reuse instructions, batch workflow configuration, result inspection, output directory structure, troubleshooting, and HTML/Markdown/JSON reproducibility report documentation.
+The user manual is the main reviewer-facing documentation. It now describes the actual desktop workflow implemented in TaxaScope: first-time environment setup, working directory selection, one-click database download, NCBI or local input preparation, module parameter configuration, batch execution, result inspection, output directory structure, troubleshooting, and HTML/Markdown/JSON reproducibility reporting.
 
 ## Key Features
 
@@ -58,15 +58,15 @@ Figure 1. TaxaScope architecture. The system operates on a four-layer model: use
 
 ## GUI Workflow
 
-Figure 2. Graphical user interface (GUI) workflow of TaxaScope. The workflow is operated from left to right in the desktop interface:
+Figure 2. Graphical user interface (GUI) workflow of TaxaScope. The workflow is operated as follows:
 
-1. Open `TaxaScope.exe`. On first use, click `Env Setup` to install or initialize WSL2 and the Podman/Docker container environment.
-2. After the interface shows `Env Ready`, click `Select Work Directory` and choose the project folder where input files, intermediate files, databases, reports, and outputs will be stored.
-3. Click `Download DBs` to download the required reference databases into `TaxaScope_Databases` under the selected working directory.
-4. Add input data by pasting GCA/GCF accessions in `Get Data`, or by placing local FASTA/FA/FNA/FAA files in the working directory.
-5. Configure parameters in module tabs such as Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, and AAI/ANI.
-6. Open `Batch`, select the modules to run sequentially, and keep report generation enabled when a summary report is needed.
-7. Click `Deploy Complete Workflow`. Progress is shown in `Runtime`, command logs are shown in `Console`, and generated results can be selected from the left file browser and inspected in `Preview`.
+1. Open `TaxaScope.exe`; on first use, click `Env Setup` and wait until the interface reports `Env Ready`.
+2. Click `Select Work Directory` and choose the project folder that will contain inputs, databases, intermediate files, outputs, and reports.
+3. Click `Download DBs` to populate `TaxaScope_Databases` and write database provenance files.
+4. Add input data through `Get Data` with GCA/GCF accessions, or place local FASTA/FA/FNA/FAA/GBK/GBFF files in the working directory.
+5. Configure module parameters in `Genome Stats`, `Prokka`, `CheckM`, `BUSCO`, `dbCAN`, `antiSMASH`, `PhyloPhlAn`, and `AAI/ANI`.
+6. Open `Batch`, use `Data Acquisition (Optional)` and `Analysis Sequence Setup`, keep report generation enabled if needed, and click `DEPLOY COMPLETE WORKFLOW`.
+7. Use `Runtime`, `Console`, `File Browser`, and `Preview` to monitor progress, troubleshoot logs, inspect outputs, and review reports.
 
 A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md).
 
