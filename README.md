@@ -14,12 +14,12 @@ The maintained documentation is centralized in the `docs/` directory.
 
 - [Documentation Index](docs/README.md)
 - [TaxaScope User Manual](docs/TaxaScope_User_Manual.md)
-- [HTML User Guide, English/Chinese/Korean](docs/TaxaScope_User_Guide.html)
+- [HTML User Guide, English/Chinese/Korean, text-only workflow version](docs/TaxaScope_User_Guide.html)
 - [Installation Guide](docs/Installation_Guide.md)
 - [Software Availability](docs/Software_Availability.md)
 - [Tool Reproducibility](docs/Tool_Reproducibility.md)
 
-The user manual includes a complete end-to-end analysis case tutorial, Figure 2 GUI workflow explanation, working directory and input format guidance, database setup and reuse instructions, batch workflow configuration, result inspection, output directory structure, troubleshooting, and HTML/Markdown/JSON reproducibility report documentation.
+The user manual includes a complete end-to-end analysis case tutorial, text-only Figure 2 GUI workflow explanation, working directory and input format guidance, database setup and reuse instructions, batch workflow configuration, result inspection, output directory structure, troubleshooting, and HTML/Markdown/JSON reproducibility report documentation.
 
 ## Key Features
 
@@ -58,16 +58,25 @@ Figure 1. TaxaScope architecture. The system operates on a four-layer model: use
 
 ## GUI Workflow
 
-![Figure 2. Graphical user interface of TaxaScope and workflow configuration](docs/assets/figure2_taxascope_gui_workflow.png)
+Figure 2. Graphical user interface (GUI) workflow of TaxaScope. The workflow is operated from left to right in the desktop interface:
 
-Figure 2. Graphical user interface (GUI) of TaxaScope and workflow configuration. Numbered elements indicate key workflow steps: (1) environment setup, including WSL2 and the container engine (Podman/Docker); (2) working directory selection for input data, intermediate files, and outputs; (3) database download; (4) module parameter configuration; (5) optional NCBI data acquisition or local sequence input; (6) batch workflow selection; and (7) one-click workflow execution. A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md).
+1. Open `TaxaScope.exe`. On first use, click `Env Setup` to install or initialize WSL2 and the Podman/Docker container environment.
+2. After the interface shows `Env Ready`, click `Select Work Directory` and choose the project folder where input files, intermediate files, databases, reports, and outputs will be stored.
+3. Click `Download DBs` to download the required reference databases into `TaxaScope_Databases` under the selected working directory.
+4. Add input data by pasting GCA/GCF accessions in `Get Data`, or by placing local FASTA/FA/FNA/FAA files in the working directory.
+5. Configure parameters in module tabs such as Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, and AAI/ANI.
+6. Open `Batch`, select the modules to run sequentially, and keep report generation enabled when a summary report is needed.
+7. Click `Deploy Complete Workflow`. Progress is shown in `Runtime`, command logs are shown in `Console`, and generated results can be selected from the left file browser and inspected in `Preview`.
+
+A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md).
 
 ## Getting Started
 
 1. Download the latest TaxaScope release.
 2. Run `TaxaScope.exe`.
-3. Follow the [Installation Guide](docs/Installation_Guide.md) to set up the environment.
-4. Read the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md) for the complete GUI workflow tutorial, Figure 2 guide, output structure, and reproducibility report documentation.
+3. Click `Env Setup` to initialize the execution environment on first use.
+4. Click `Select Work Directory`, choose the project folder, then click `Download DBs`.
+5. Read the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md) for the complete GUI workflow tutorial, output structure, and reproducibility report documentation.
 
 ## Publication and Citation
 

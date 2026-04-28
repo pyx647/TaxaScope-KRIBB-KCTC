@@ -20,21 +20,20 @@ The main workflow supports:
 
 ## Graphical User Interface
 
-![Figure 2. Graphical user interface of TaxaScope and workflow configuration](assets/figure2_taxascope_gui_workflow.png)
+**Figure 2. Graphical user interface (GUI) workflow of TaxaScope.** The TaxaScope graphical user interface provides an integrated environment for configuring and executing genome-based taxonomic workflows. The interface is organized into functional panels guiding users from environment initialization to workflow execution and result inspection.
 
-**Figure 2. Graphical user interface (GUI) of TaxaScope and workflow configuration.** The TaxaScope graphical user interface provides an integrated environment for configuring and executing genome-based taxonomic workflows. The interface is organized into functional panels guiding users from environment initialization to workflow execution and result inspection.
+The workflow is operated as follows:
 
-Numbered elements indicate key steps in the workflow:
+1. **Open TaxaScope and install the environment.** Run `TaxaScope.exe`. On first use, click `Env Setup` to install or initialize WSL2 and the container engine, using Podman by default with Docker fallback where available. This step is performed once and is not required for subsequent analyses.
+2. **Confirm the environment.** When the interface shows `Env Ready`, the execution environment is available. Use `VM Config` only when the Podman virtual machine requires memory/CPU adjustment or repair.
+3. **Select the working directory.** Click `Select Work Directory` and choose the project folder. TaxaScope uses this folder for input data, intermediate files, databases, reports, and final outputs.
+4. **Download reference databases.** Click `Download DBs` to install required databases into `TaxaScope_Databases` under the selected working directory. Database source and version information is recorded in `database_sources.json`.
+5. **Add input data.** Use `Get Data` to paste GCA/GCF accessions and download genome assemblies from NCBI, or place local FASTA/FA/FNA/FAA files directly in the working directory.
+6. **Configure module parameters.** Open module tabs such as Prokka, CheckM, BUSCO, dbCAN, antiSMASH, PhyloPhlAn, and AAI/ANI to adjust tool-specific settings before execution.
+7. **Select the batch workflow.** Open `Batch` mode, select the modules to run sequentially, and keep report generation enabled when HTML, Markdown, and JSON run reports are needed.
+8. **Run and inspect results.** Click `Deploy Complete Workflow`. The `Runtime` tab displays task progress, the `Console` tab records command-line logs, and the `Preview` tab displays selected tables, figures, reports, and tree files from the left file browser.
 
-1. **Environment setup.** Initialization of the required execution environment, including WSL2 and the container engine (Podman/Docker), performed only once during installation and not required for subsequent analyses.
-2. **Working directory selection.** Users specify a project directory for input data, intermediate files, and outputs.
-3. **Database download.** Required reference databases are downloaded to the working directory, need to be installed only once, and can be reused by relocating them to other working directories.
-4. **Parameter configuration.** Individual analysis modules, such as Prokka, CheckM, and BUSCO, allow parameter adjustment prior to execution, defining tool-specific settings.
-5. **Data acquisition (optional).** Genome assemblies can be retrieved from NCBI using accession numbers, such as GCF or GCA accessions. Alternatively, users can provide local sequence files, including genome assemblies or protein sequences in FASTA/FA format, placed within the working directory.
-6. **Workflow selection (batch mode).** Users select and combine analysis modules into a sequential workflow.
-7. **Workflow execution.** The pipeline is initiated through a single command.
-
-The left panel, highlighted in blue, displays the file browser, showing all input files, intermediate results, and outputs generated within the working directory. The central panel presents workflow configuration and module selection. The right panel, highlighted in yellow, contains three tabs: Runtime, showing task status and progress; Console, providing command-line logs for transparency and troubleshooting; and Preview, enabling visualization of selected results from the file browser, including figures and report outputs.
+The left panel displays the file browser and shows all input files, intermediate results, and outputs generated within the working directory. The central panel presents workflow configuration and module selection. The right panel contains three tabs: `Runtime` for task status and progress, `Console` for transparent command-line logs and troubleshooting, and `Preview` for visualization of selected result files.
 
 ## System Requirements
 
@@ -108,29 +107,33 @@ TaxaScope uses this file to report database names, versions, download sources, a
 
 This example describes a typical bacterial genome workflow.
 
-### 1. Prepare Data
+### 1. Open TaxaScope and Install the Environment
 
-Create a project folder and place genome FASTA files in it, or use the Get Data panel to download genomes from NCBI accessions.
+Run `TaxaScope.exe`. On the first run, click `Env Setup` to install or initialize WSL2 and the Podman/Docker execution environment. Windows 10 users should complete the WSL2 helper steps and reboot if prompted. After setup, confirm that the status button shows `Env Ready`.
 
 ### 2. Select Working Directory
 
-Use the working directory selector to choose the project folder. TaxaScope will use this location for input files, intermediate files, final outputs, databases, and reports.
+Click `Select Work Directory` and choose a project folder. TaxaScope will use this location for input files, intermediate files, final outputs, databases, and reports.
 
 ### 3. Download Databases
 
-Click Download DBs to install the required reference databases. This step is required only once for a working directory. The database folder can also be copied to another project directory for reuse.
+Click `Download DBs` to install the required reference databases. This step is required only once for a working directory. The database folder can also be copied to another project directory for reuse. Database source records are written to `TaxaScope_Databases/database_sources.json`.
 
-### 4. Configure Modules
+### 4. Add Input Data
 
-Open each analysis module tab and adjust parameters when needed. Batch mode can combine multiple modules into a sequential workflow.
+Use `Get Data` to paste GCA/GCF accessions and download assemblies from NCBI, or place local genome/protein sequence files directly in the working directory.
 
-### 5. Run the Workflow
+### 5. Configure Modules
 
-Select the desired modules and click Deploy Complete Workflow. TaxaScope will run the selected tools sequentially and write outputs into the working directory.
+Open each analysis module tab and adjust parameters when needed. For example, users can select dbCAN methods, adjust antiSMASH settings, or enable Low Perf Mode for memory-limited machines.
 
-### 6. Inspect Results
+### 6. Run the Workflow
 
-Use the file browser to select output tables, figures, reports, or tree files. The Preview panel displays compatible result files directly in the GUI.
+Open `Batch` mode, select the desired modules, and click `Deploy Complete Workflow`. TaxaScope will run the selected tools sequentially and write outputs into the working directory.
+
+### 7. Inspect Results
+
+Use the file browser to select output tables, figures, reports, or tree files. The `Preview` panel displays compatible result files directly in the GUI. The `Runtime` and `Console` tabs provide progress and command logs for troubleshooting.
 
 ## Typical Batch Workflow
 
@@ -204,5 +207,5 @@ Confirm that protein FASTA files are available for PhyloPhlAn and that the requi
 The following text can be adapted for manuscript revision or reviewer response:
 
 ```text
-We added a GitHub-accessible TaxaScope user manual containing a complete analysis case tutorial, GUI workflow description, input/output guidance, database setup instructions, and reproducibility report documentation. The manual also includes a numbered GUI figure explaining environment setup, working directory selection, database download, parameter configuration, optional NCBI data acquisition, batch workflow selection, workflow execution, file browsing, runtime logs, and result preview.
+We added a GitHub-accessible TaxaScope user manual containing a complete analysis case tutorial, GUI workflow description, input/output guidance, database setup instructions, and reproducibility report documentation. The manual now provides a text-based Figure 2 workflow explanation covering environment installation, working directory selection, database download, input acquisition, parameter configuration, batch workflow selection, one-click execution, file browsing, runtime logs, and result preview.
 ```
