@@ -39,6 +39,10 @@ TaxaScope uses a four-layer architecture to support stability and reproducibilit
 3. **Analysis core**: containerized bioinformatics tools and local databases.
 4. **Infrastructure layer**: Windows host system with WSL2 and Podman/Docker backend.
 
+<img width="1916" height="1029" alt="Figure 1. TaxaScope architecture" src="https://github.com/user-attachments/assets/69093f22-e0cb-4a13-b01a-d653ad878088" />
+
+Figure 1. TaxaScope architecture. The system operates on a four-layer model: user interface, orchestration engine, analysis core, and infrastructure. The presentation layer provides the GUI for parameter tuning and result visualization. The orchestration layer manages task scheduling and resource allocation. The analysis core executes bioinformatics tools within isolated container environments. The infrastructure layer handles Windows, WSL2, Podman/Docker, and data I/O.
+
 ## Included Tools
 
 | Tool | Function |
