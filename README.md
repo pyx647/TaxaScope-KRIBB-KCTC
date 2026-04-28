@@ -19,13 +19,14 @@ The maintained documentation is centralized in the `docs/` directory.
 - [Software Availability](docs/Software_Availability.md)
 - [Tool Reproducibility](docs/Tool_Reproducibility.md)
 
-The user manual is the main reviewer-facing documentation. It now describes the actual desktop workflow implemented in TaxaScope: first-time environment setup, working directory selection, one-click database download, NCBI or local input preparation, module parameter configuration, batch execution, result inspection, output directory structure, troubleshooting, and HTML/Markdown/JSON reproducibility reporting.
+The user manual is the main reviewer-facing documentation. It now describes the actual desktop workflow implemented in TaxaScope: first-time environment setup, working directory selection, one-click database download, offline or online container image handling, NCBI or local input preparation, module parameter configuration, batch execution, result inspection, output directory structure, troubleshooting, and HTML/Markdown/JSON reproducibility reporting.
 
 ## Key Features
 
 - **One-click analysis**: automated workflows for Prokka, BUSCO, CheckM2, dbCAN, antiSMASH, PhyloPhlAn, and ANI/AAI.
 - **NCBI data acquisition**: batch genome retrieval using GCA/GCF accessions.
 - **Containerized execution**: tools run in isolated Podman/Docker-compatible container environments.
+- **Offline image handling**: users can import or export pre-packaged container images when network access is limited.
 - **Batch workflow configuration**: users can combine modules into sequential workflows.
 - **Result inspection**: output files, plots, reports, and trees can be inspected from the GUI.
 - **Reproducibility reporting**: runs can export HTML, Markdown, and JSON reports containing software, database, parameter, timestamp, input, and output metadata.
@@ -58,7 +59,7 @@ Figure 1. TaxaScope architecture. The system operates on a four-layer model: use
 
 ## GUI Workflow
 
-Figure 2. Graphical user interface (GUI) workflow of TaxaScope. The workflow is operated as follows:
+TaxaScope GUI workflow. The workflow is operated as follows:
 
 1. Open `TaxaScope.exe`; on first use, click `Env Setup` and wait until the interface reports `Env Ready`.
 2. Click `Select Work Directory` and choose the project folder that will contain inputs, databases, intermediate files, outputs, and reports.

@@ -109,7 +109,9 @@
       padding: 2px 5px;
       border-radius: 4px;
       font-family: Consolas, "Courier New", monospace;
+      overflow-wrap: anywhere;
     }
+    td code { word-break: break-all; }
     pre {
       background: var(--code-bg);
       color: var(--code-ink);
@@ -155,11 +157,13 @@
           <a href="#en-overview">1. Overview</a>
           <a href="#en-first">2. First-time setup</a>
           <a href="#en-workdir">3. Working directory and databases</a>
-          <a href="#en-inputs">4. Input data</a>
-          <a href="#en-gui">5. GUI workflow</a>
-          <a href="#en-modules">6. Modules and outputs</a>
-          <a href="#en-reports">7. Reports and reproducibility</a>
-          <a href="#en-troubleshooting">8. Troubleshooting</a>
+          <a href="#en-images">4. Container images</a>
+          <a href="#en-inputs">5. Input data</a>
+          <a href="#en-gui">6. GUI workflow</a>
+          <a href="#en-modules">7. Modules and outputs</a>
+          <a href="#en-reports">8. Reports and reproducibility</a>
+          <a href="#en-exit">9. Exit and cleanup</a>
+          <a href="#en-troubleshooting">10. Troubleshooting</a>
         </div>
       </section>
 
@@ -183,7 +187,7 @@
         <ol>
           <li>Run <code>TaxaScope.exe</code>.</li>
           <li>Click <code>Env Setup</code> on first use. This initializes WSL2 and the container engine.</li>
-          <li>On Windows 10, complete the WSL2 helper steps and reboot if prompted.</li>
+          <li>On Windows 10, use <code>Win10 WSL2</code> if the button is shown, complete the WSL2 helper steps, and reboot if prompted.</li>
           <li>Open TaxaScope again and confirm that the button shows <code>Env Ready</code>.</li>
           <li>Use <code>VM Config</code> only when the Podman VM needs memory/CPU adjustment or repair.</li>
           <li>Enable <code>Low Perf Mode</code> on memory-limited systems, especially for CheckM2 and antiSMASH.</li>
@@ -229,8 +233,30 @@
         </table>
       </section>
 
+      <section id="en-images">
+        <h2>4. Container Images</h2>
+        <p>TaxaScope analysis modules run as Podman/Docker-compatible container images. Users can work online or offline depending on network access.</p>
+        <ul>
+          <li><code>Import Images</code>: imports pre-packaged <code>.tar</code> images from a <code>BioToolkit_Images</code> or <code>TaxaScope_Images</code> folder. Use this for network-restricted computers.</li>
+          <li><code>Export Images</code>: exports installed images to <code>.tar</code> files for offline transfer to another computer.</li>
+          <li>Online mode: if Docker Hub is accessible, TaxaScope can pull missing images automatically when a module is first executed.</li>
+          <li><code>Uninstall [tool name] (Free Space)</code>: removes an unused image from the local image store.</li>
+        </ul>
+        <p><strong>Table S1. Container image specifications for TaxaScope modules.</strong></p>
+        <table>
+          <tr><th>Module</th><th>Tool version</th><th>Database version*</th><th>Container image</th><th>Image digest (SHA256, linux/amd64)</th></tr>
+          <tr><td>Prokka</td><td>1.14.6</td><td>v1.14.6</td><td><code>docker.io/pyx07/prokka:v1-nodb-release</code></td><td><code>sha256:6b0c6e6e8b330858c9764690ead2b9d8a4160109474c2401f6eddf2347fb4e82</code></td></tr>
+          <tr><td>dbCAN</td><td>4.2.0-rc2</td><td>db_v5_2_9-13-2025</td><td><code>docker.io/pyx07/dbcan:v5-nodb-release</code></td><td><code>sha256:46e1790f026fa5a33f7d6a65c6c3c437b9122a59c2e46c62e79806db942c2dc7</code></td></tr>
+          <tr><td>BUSCO</td><td>5.8.2</td><td>bacteria_odb12 (2025-05-14)</td><td><code>docker.io/pyx07/busco:v5-nodb-release</code></td><td><code>sha256:c73e3c9a4b837ed7f216fc024721593ac44290d904d1567bb9582b7984158845</code></td></tr>
+          <tr><td>CheckM2</td><td>1.1.0</td><td>Zenodo record 14897628</td><td><code>docker.io/pyx07/checkm2:v2-nodb-release</code></td><td><code>sha256:c9a9ed455a39d26041b9a8d30edf144c02c7360190be8d06888edfb897c48134</code></td></tr>
+          <tr><td>PhyloPhlAn</td><td>3.0.67</td><td>Zenodo record 4005620</td><td><code>docker.io/pyx07/phylophlan:v3-nodb-release</code></td><td><code>sha256:8cc55c91b5a79f2df4dba8be7128e00953bb298569d1c4a4225d599f12191277</code></td></tr>
+          <tr><td>antiSMASH</td><td>8.0.4</td><td>standalone-lite 8.0.4 databases</td><td><code>docker.io/pyx07/antismash:latest-nodb-release</code></td><td><code>sha256:864038983edb0c19caf45cbfcdf5bb01156da7aafb0ae73a27bbbce7e128234c</code></td></tr>
+        </table>
+        <p>* External databases are not distributed inside the images. They are installed into the selected working directory through <code>Download DBs</code>.</p>
+      </section>
+
       <section id="en-inputs">
-        <h2>4. Input Data</h2>
+        <h2>5. Input Data</h2>
         <h3>NCBI accessions</h3>
         <p>Open <code>Get Data</code>, enter one GCA/GCF accession per line, select file types, and click <code>Start Download</code>. TaxaScope can retrieve genome FASTA, protein FAA, GBFF, GFF3, and assembly JSON reports. Metadata is preserved as <code>metadata.json</code> when available.</p>
         <h3>Local files</h3>
@@ -238,9 +264,9 @@
       </section>
 
       <section id="en-gui">
-        <h2>5. GUI Workflow</h2>
+        <h2>6. GUI Workflow</h2>
         <div class="workflow-box">
-          <p><strong>Figure 2. Text-based legend for the TaxaScope GUI workflow.</strong></p>
+          <p><strong>TaxaScope GUI workflow steps.</strong></p>
           <ol>
             <li>Click <code>Env Setup</code> for first-time environment installation. Wait for <code>Env Ready</code>.</li>
             <li>Click <code>Select Work Directory</code> and choose the project folder.</li>
@@ -256,7 +282,7 @@
       </section>
 
       <section id="en-modules">
-        <h2>6. Modules and Outputs</h2>
+        <h2>7. Modules and Outputs</h2>
         <table>
           <tr><th>Module</th><th>Input</th><th>Main outputs</th></tr>
           <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>genome_stats.xlsx</code></td></tr>
@@ -271,7 +297,7 @@
       </section>
 
       <section id="en-reports">
-        <h2>7. Reports and Reproducibility</h2>
+        <h2>8. Reports and Reproducibility</h2>
         <p>TaxaScope writes three reviewer-friendly reproducibility outputs:</p>
         <ul>
           <li><code>TaxaScope_Run_Manifest.json</code>: machine-readable manifest with software, database, parameter, runtime, input, and output metadata.</li>
@@ -280,8 +306,18 @@
         </ul>
       </section>
 
+      <section id="en-exit">
+        <h2>9. Exit and Cleanup</h2>
+        <p>When closing TaxaScope, the software asks whether WSL backends should be shut down.</p>
+        <ul>
+          <li>Choose <code>Yes</code> to run <code>wsl --shutdown</code>. This releases memory used by WSL and Podman, but the next startup may take longer.</li>
+          <li>Choose <code>No</code> to close only the GUI and keep WSL running for faster restart.</li>
+          <li>Use the red <code>Stop Current Task</code> button if a running analysis becomes unresponsive.</li>
+        </ul>
+      </section>
+
       <section id="en-troubleshooting">
-        <h2>8. Troubleshooting</h2>
+        <h2>10. Troubleshooting</h2>
         <ul>
           <li>If <code>Env Ready</code> does not appear, start Podman or Docker Desktop and reopen TaxaScope. Use <code>VM Config</code> if the Podman VM needs repair.</li>
           <li>If a database is missing, select the same working directory and click <code>Download DBs</code> again.</li>
@@ -300,11 +336,13 @@
           <a href="#zh-overview">1. 软件概述</a>
           <a href="#zh-first">2. 首次环境设置</a>
           <a href="#zh-workdir">3. 工作目录和数据库</a>
-          <a href="#zh-inputs">4. 输入数据</a>
-          <a href="#zh-gui">5. GUI 工作流</a>
-          <a href="#zh-modules">6. 模块和输出</a>
-          <a href="#zh-reports">7. 复现性报告</a>
-          <a href="#zh-troubleshooting">8. 故障排查</a>
+          <a href="#zh-images">4. 容器镜像</a>
+          <a href="#zh-inputs">5. 输入数据</a>
+          <a href="#zh-gui">6. GUI 工作流</a>
+          <a href="#zh-modules">7. 模块和输出</a>
+          <a href="#zh-reports">8. 复现性报告</a>
+          <a href="#zh-exit">9. 退出和清理</a>
+          <a href="#zh-troubleshooting">10. 故障排查</a>
         </div>
       </section>
 
@@ -328,7 +366,7 @@
         <ol>
           <li>运行 <code>TaxaScope.exe</code>。</li>
           <li>首次使用时点击 <code>Env Setup</code>。该步骤会初始化 WSL2 和容器运行环境。</li>
-          <li>Windows 10 用户如果按提示安装 WSL2 组件，完成后需要重启电脑。</li>
+          <li>Windows 10 用户如果看到 <code>Win10 WSL2</code> 按钮，先按提示安装 WSL2 组件，完成后需要重启电脑。</li>
           <li>重新打开 TaxaScope，确认按钮显示为 <code>Env Ready</code>。</li>
           <li><code>VM Config</code> 不是常规第一步，只在 Podman VM 需要调整内存、CPU 或修复时使用。</li>
           <li>内存较低的机器建议开启 <code>Low Perf Mode</code>，尤其是运行 CheckM2 和 antiSMASH 时。</li>
@@ -374,8 +412,30 @@
         </table>
       </section>
 
+      <section id="zh-images">
+        <h2>4. 容器镜像</h2>
+        <p>TaxaScope 的分析模块通过 Podman/Docker 兼容的容器镜像运行。用户可以根据网络情况选择在线拉取或离线导入。</p>
+        <ul>
+          <li><code>Import Images</code>：从 <code>BioToolkit_Images</code> 或 <code>TaxaScope_Images</code> 文件夹导入预打包的 <code>.tar</code> 镜像，适合网络受限电脑。</li>
+          <li><code>Export Images</code>：把已安装镜像导出成 <code>.tar</code>，用于离线转移到其他电脑。</li>
+          <li>在线模式：如果可以访问 Docker Hub，首次运行模块时 TaxaScope 会自动拉取缺失镜像。</li>
+          <li><code>Uninstall [工具名] (Free Space)</code>：删除不用的工具镜像以释放磁盘空间。</li>
+        </ul>
+        <p><strong>Table S1. TaxaScope 模块容器镜像规格。</strong></p>
+        <table>
+          <tr><th>模块</th><th>工具版本</th><th>数据库版本*</th><th>容器镜像</th><th>镜像 Digest (SHA256, linux/amd64)</th></tr>
+          <tr><td>Prokka</td><td>1.14.6</td><td>v1.14.6</td><td><code>docker.io/pyx07/prokka:v1-nodb-release</code></td><td><code>sha256:6b0c6e6e8b330858c9764690ead2b9d8a4160109474c2401f6eddf2347fb4e82</code></td></tr>
+          <tr><td>dbCAN</td><td>4.2.0-rc2</td><td>db_v5_2_9-13-2025</td><td><code>docker.io/pyx07/dbcan:v5-nodb-release</code></td><td><code>sha256:46e1790f026fa5a33f7d6a65c6c3c437b9122a59c2e46c62e79806db942c2dc7</code></td></tr>
+          <tr><td>BUSCO</td><td>5.8.2</td><td>bacteria_odb12 (2025-05-14)</td><td><code>docker.io/pyx07/busco:v5-nodb-release</code></td><td><code>sha256:c73e3c9a4b837ed7f216fc024721593ac44290d904d1567bb9582b7984158845</code></td></tr>
+          <tr><td>CheckM2</td><td>1.1.0</td><td>Zenodo record 14897628</td><td><code>docker.io/pyx07/checkm2:v2-nodb-release</code></td><td><code>sha256:c9a9ed455a39d26041b9a8d30edf144c02c7360190be8d06888edfb897c48134</code></td></tr>
+          <tr><td>PhyloPhlAn</td><td>3.0.67</td><td>Zenodo record 4005620</td><td><code>docker.io/pyx07/phylophlan:v3-nodb-release</code></td><td><code>sha256:8cc55c91b5a79f2df4dba8be7128e00953bb298569d1c4a4225d599f12191277</code></td></tr>
+          <tr><td>antiSMASH</td><td>8.0.4</td><td>standalone-lite 8.0.4 databases</td><td><code>docker.io/pyx07/antismash:latest-nodb-release</code></td><td><code>sha256:864038983edb0c19caf45cbfcdf5bb01156da7aafb0ae73a27bbbce7e128234c</code></td></tr>
+        </table>
+        <p>* 外部数据库不随镜像分发，而是通过 <code>Download DBs</code> 安装到所选工作目录。</p>
+      </section>
+
       <section id="zh-inputs">
-        <h2>4. 输入数据</h2>
+        <h2>5. 输入数据</h2>
         <h3>NCBI accession 下载</h3>
         <p>进入 <code>Get Data</code> 标签页，每行输入一个 GCA/GCF accession，选择需要的文件类型，然后点击 <code>Start Download</code>。TaxaScope 可下载基因组 FASTA、蛋白 FAA、GBFF、GFF3 和 assembly JSON report。可用的 NCBI 元数据会保存在 <code>metadata.json</code>。</p>
         <h3>本地文件</h3>
@@ -383,9 +443,9 @@
       </section>
 
       <section id="zh-gui">
-        <h2>5. GUI 工作流</h2>
+        <h2>6. GUI 工作流</h2>
         <div class="workflow-box">
-          <p><strong>图 2. TaxaScope GUI 工作流文字说明。</strong></p>
+          <p><strong>TaxaScope GUI 操作流程。</strong></p>
           <ol>
             <li>点击 <code>Env Setup</code> 完成首次环境安装，等待状态变为 <code>Env Ready</code>。</li>
             <li>点击 <code>Select Work Directory</code>，选择本次分析的项目文件夹。</li>
@@ -401,7 +461,7 @@
       </section>
 
       <section id="zh-modules">
-        <h2>6. 模块和输出</h2>
+        <h2>7. 模块和输出</h2>
         <table>
           <tr><th>模块</th><th>输入</th><th>主要输出</th></tr>
           <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>genome_stats.xlsx</code></td></tr>
@@ -416,7 +476,7 @@
       </section>
 
       <section id="zh-reports">
-        <h2>7. 复现性报告</h2>
+        <h2>8. 复现性报告</h2>
         <p>TaxaScope 会输出三类适合审稿和复现记录的文件：</p>
         <ul>
           <li><code>TaxaScope_Run_Manifest.json</code>：机器可读，记录软件、数据库、参数、运行时间、输入和输出。</li>
@@ -425,8 +485,18 @@
         </ul>
       </section>
 
+      <section id="zh-exit">
+        <h2>9. 退出和清理</h2>
+        <p>关闭 TaxaScope 时，软件会询问是否关闭 WSL 后台。</p>
+        <ul>
+          <li>选择 <code>Yes</code>：执行 <code>wsl --shutdown</code>，释放 WSL/Podman 占用的内存，但下次启动会稍慢。</li>
+          <li>选择 <code>No</code>：只退出 GUI，保留 WSL 后台运行，方便下次更快启动。</li>
+          <li>分析卡住时，可点击底部红色 <code>Stop Current Task</code> 尝试终止当前任务。</li>
+        </ul>
+      </section>
+
       <section id="zh-troubleshooting">
-        <h2>8. 故障排查</h2>
+        <h2>10. 故障排查</h2>
         <ul>
           <li>如果没有显示 <code>Env Ready</code>，先启动 Podman 或 Docker Desktop，再重新打开 TaxaScope；Podman VM 异常时使用 <code>VM Config</code>。</li>
           <li>如果提示数据库缺失，确认当前工作目录下有 <code>TaxaScope_Databases</code>，然后再次点击 <code>Download DBs</code>。</li>
@@ -445,11 +515,13 @@
           <a href="#ko-overview">1. 개요</a>
           <a href="#ko-first">2. 최초 환경 설정</a>
           <a href="#ko-workdir">3. 작업 폴더와 데이터베이스</a>
-          <a href="#ko-inputs">4. 입력 데이터</a>
-          <a href="#ko-gui">5. GUI 워크플로</a>
-          <a href="#ko-modules">6. 모듈과 출력</a>
-          <a href="#ko-reports">7. 재현성 보고서</a>
-          <a href="#ko-troubleshooting">8. 문제 해결</a>
+          <a href="#ko-images">4. 컨테이너 이미지</a>
+          <a href="#ko-inputs">5. 입력 데이터</a>
+          <a href="#ko-gui">6. GUI 워크플로</a>
+          <a href="#ko-modules">7. 모듈과 출력</a>
+          <a href="#ko-reports">8. 재현성 보고서</a>
+          <a href="#ko-exit">9. 종료와 정리</a>
+          <a href="#ko-troubleshooting">10. 문제 해결</a>
         </div>
       </section>
 
@@ -472,7 +544,7 @@
         <ol>
           <li><code>TaxaScope.exe</code>를 실행합니다.</li>
           <li>처음 사용할 때 <code>Env Setup</code>을 클릭하여 WSL2와 컨테이너 런타임을 초기화합니다.</li>
-          <li>Windows 10에서는 WSL2 설정 후 재부팅이 필요할 수 있습니다.</li>
+          <li>Windows 10에서 <code>Win10 WSL2</code> 버튼이 보이면 WSL2 helper 설정을 완료한 뒤 재부팅합니다.</li>
           <li>다시 실행한 뒤 <code>Env Ready</code> 상태를 확인합니다.</li>
           <li><code>VM Config</code>는 Podman VM 메모리/CPU 조정 또는 복구가 필요할 때 사용합니다.</li>
           <li>메모리가 제한된 시스템에서는 <code>Low Perf Mode</code>를 사용합니다.</li>
@@ -494,15 +566,37 @@
         </table>
       </section>
 
+      <section id="ko-images">
+        <h2>4. 컨테이너 이미지</h2>
+        <p>TaxaScope 모듈은 Podman/Docker 호환 컨테이너 이미지로 실행됩니다. 네트워크 환경에 따라 온라인 다운로드 또는 오프라인 가져오기를 사용할 수 있습니다.</p>
+        <ul>
+          <li><code>Import Images</code>: <code>BioToolkit_Images</code> 또는 <code>TaxaScope_Images</code> 폴더의 <code>.tar</code> 이미지를 가져옵니다.</li>
+          <li><code>Export Images</code>: 설치된 이미지를 <code>.tar</code> 파일로 내보내 다른 컴퓨터로 옮길 수 있습니다.</li>
+          <li>온라인 모드: Docker Hub에 접근할 수 있으면 처음 실행할 때 누락된 이미지를 자동으로 받을 수 있습니다.</li>
+          <li><code>Uninstall [tool name] (Free Space)</code>: 사용하지 않는 이미지를 삭제하여 디스크 공간을 확보합니다.</li>
+        </ul>
+        <p><strong>Table S1. TaxaScope module container image specifications.</strong></p>
+        <table>
+          <tr><th>Module</th><th>Tool version</th><th>Database version*</th><th>Container image</th><th>Image digest (SHA256, linux/amd64)</th></tr>
+          <tr><td>Prokka</td><td>1.14.6</td><td>v1.14.6</td><td><code>docker.io/pyx07/prokka:v1-nodb-release</code></td><td><code>sha256:6b0c6e6e8b330858c9764690ead2b9d8a4160109474c2401f6eddf2347fb4e82</code></td></tr>
+          <tr><td>dbCAN</td><td>4.2.0-rc2</td><td>db_v5_2_9-13-2025</td><td><code>docker.io/pyx07/dbcan:v5-nodb-release</code></td><td><code>sha256:46e1790f026fa5a33f7d6a65c6c3c437b9122a59c2e46c62e79806db942c2dc7</code></td></tr>
+          <tr><td>BUSCO</td><td>5.8.2</td><td>bacteria_odb12 (2025-05-14)</td><td><code>docker.io/pyx07/busco:v5-nodb-release</code></td><td><code>sha256:c73e3c9a4b837ed7f216fc024721593ac44290d904d1567bb9582b7984158845</code></td></tr>
+          <tr><td>CheckM2</td><td>1.1.0</td><td>Zenodo record 14897628</td><td><code>docker.io/pyx07/checkm2:v2-nodb-release</code></td><td><code>sha256:c9a9ed455a39d26041b9a8d30edf144c02c7360190be8d06888edfb897c48134</code></td></tr>
+          <tr><td>PhyloPhlAn</td><td>3.0.67</td><td>Zenodo record 4005620</td><td><code>docker.io/pyx07/phylophlan:v3-nodb-release</code></td><td><code>sha256:8cc55c91b5a79f2df4dba8be7128e00953bb298569d1c4a4225d599f12191277</code></td></tr>
+          <tr><td>antiSMASH</td><td>8.0.4</td><td>standalone-lite 8.0.4 databases</td><td><code>docker.io/pyx07/antismash:latest-nodb-release</code></td><td><code>sha256:864038983edb0c19caf45cbfcdf5bb01156da7aafb0ae73a27bbbce7e128234c</code></td></tr>
+        </table>
+        <p>* External databases are installed into the selected working directory through <code>Download DBs</code>.</p>
+      </section>
+
       <section id="ko-inputs">
-        <h2>4. 입력 데이터</h2>
+        <h2>5. 입력 데이터</h2>
         <p><code>Get Data</code> 탭에서 GCA/GCF accession을 한 줄에 하나씩 입력하고 <code>Start Download</code>를 클릭합니다. 또는 FASTA/FAA/GBK/GBFF 파일을 작업 폴더에 직접 넣습니다. dbCAN과 PhyloPhlAn은 <code>.faa</code> 단백질 파일을 사용합니다.</p>
       </section>
 
       <section id="ko-gui">
-        <h2>5. GUI 워크플로</h2>
+        <h2>6. GUI 워크플로</h2>
         <div class="workflow-box">
-          <p><strong>그림 2. TaxaScope GUI 워크플로의 텍스트 설명.</strong></p>
+          <p><strong>TaxaScope GUI 작업 절차.</strong></p>
           <ol>
             <li><code>Env Setup</code>을 클릭하고 <code>Env Ready</code> 상태를 확인합니다.</li>
             <li><code>Select Work Directory</code>를 클릭하여 프로젝트 폴더를 선택합니다.</li>
@@ -517,7 +611,7 @@
       </section>
 
       <section id="ko-modules">
-        <h2>6. 모듈과 출력</h2>
+        <h2>7. 모듈과 출력</h2>
         <table>
           <tr><th>모듈</th><th>입력</th><th>주요 출력</th></tr>
           <tr><td>Genome Stats</td><td><code>.fasta</code>, <code>.fa</code>, <code>.fna</code></td><td><code>genome_stats.xlsx</code></td></tr>
@@ -532,7 +626,7 @@
       </section>
 
       <section id="ko-reports">
-        <h2>7. 재현성 보고서</h2>
+        <h2>8. 재현성 보고서</h2>
         <ul>
           <li><code>TaxaScope_Run_Manifest.json</code>: 소프트웨어, 데이터베이스, 매개변수, 입력, 출력 정보를 담은 기계 판독형 기록.</li>
           <li><code>TaxaScope_Run_Report.md</code>: 보충 방법과 심사 답변에 사용할 수 있는 Markdown 요약.</li>
@@ -540,8 +634,18 @@
         </ul>
       </section>
 
+      <section id="ko-exit">
+        <h2>9. 종료와 정리</h2>
+        <p>TaxaScope를 닫을 때 WSL 백엔드를 종료할지 묻습니다.</p>
+        <ul>
+          <li><code>Yes</code>: <code>wsl --shutdown</code>을 실행하여 WSL/Podman 메모리를 해제하지만 다음 시작이 느려질 수 있습니다.</li>
+          <li><code>No</code>: GUI만 종료하고 WSL은 계속 실행하여 다음 시작을 빠르게 합니다.</li>
+          <li>실행 중 작업이 멈추면 빨간 <code>Stop Current Task</code> 버튼을 사용합니다.</li>
+        </ul>
+      </section>
+
       <section id="ko-troubleshooting">
-        <h2>8. 문제 해결</h2>
+        <h2>10. 문제 해결</h2>
         <ul>
           <li><code>Env Ready</code>가 보이지 않으면 Podman 또는 Docker Desktop을 시작하고 TaxaScope를 다시 실행합니다.</li>
           <li>데이터베이스가 없다고 나오면 같은 작업 폴더에서 <code>Download DBs</code>를 다시 실행합니다.</li>
@@ -553,7 +657,7 @@
     </div>
   </main>
 
-  <footer>TaxaScope KRIBB-KCTC User Guide</footer>
+  <footer>TaxaScope KRIBB-KCTC User Guide. Prepared by PENG YUXIN and JIANG YUE.</footer>
 
   <script>
     const buttons = document.querySelectorAll(".lang-switcher button");

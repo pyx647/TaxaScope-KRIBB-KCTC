@@ -37,6 +37,7 @@ Run `TaxaScope.exe`. The upper control bar contains the buttons used to initiali
 
 - `Env Setup`: installs or initializes the WSL2 and container execution environment.
 - `Env Ready`: shown when TaxaScope detects that the execution environment is available.
+- `Win10 WSL2`: shown only on Windows 10 when the WSL2 helper setup is needed.
 - `VM Config`: adjusts or recreates the Podman VM when memory, CPU allocation, or VM repair is needed.
 - `Low Perf Mode`: reduces resource usage for memory-limited machines.
 
@@ -44,7 +45,7 @@ Run `TaxaScope.exe`. The upper control bar contains the buttons used to initiali
 
 On first use, click `Env Setup`.
 
-Windows 10 users may be asked to complete WSL2 helper steps and reboot. After the computer restarts, open TaxaScope again and confirm that the button changes to `Env Ready`.
+Windows 10 users may also see a `Win10 WSL2` button. Use it when WSL2 kernel support or required Windows features are not yet enabled. After WSL2 setup, reboot the computer. After the computer restarts, open TaxaScope again and confirm that the button changes to `Env Ready`.
 
 Do not use `VM Config` as the normal first step. Use it only when Podman was installed manually, the VM needs more memory or CPU, or the VM needs to be recreated.
 
@@ -120,7 +121,47 @@ The current database plan includes:
 
 If a module reports that a database is missing, return to the same working directory and run `Download DBs` again. Already completed databases are skipped when readiness markers are present.
 
-## 5. Input Data
+## 5. Container Images and Offline Use
+
+TaxaScope modules run through Podman or Docker-compatible container images. Users can choose either online image pulling or offline image import.
+
+### 5.1 Offline Image Import
+
+Use this route when the target computer has limited access to Docker Hub or international networks.
+
+1. Prepare the exported image archive folder, usually named `BioToolkit_Images` or `TaxaScope_Images`, containing `.tar` image files.
+2. Open TaxaScope.
+3. Click `Import Images`.
+4. Select the folder containing the image `.tar` files.
+5. TaxaScope imports the images into Podman or Docker and writes progress to the `Console` tab.
+
+### 5.2 Online Image Pulling
+
+If the computer can access Docker Hub, manual image import is not required. When a module is executed and the required image is not available locally, TaxaScope attempts to pull the corresponding image automatically.
+
+The first run of a module may therefore take longer because both container images and reference databases may need to be downloaded.
+
+### 5.3 Image Export and Disk Cleanup
+
+- `Export Images`: exports installed container images into `.tar` files for offline transfer to another computer.
+- `Uninstall [tool name] (Free Space)`: removes a tool image from the local Podman/Docker image store. The tool can be used again later by re-importing or re-pulling the image.
+
+### 5.4 Container Image Specifications
+
+Table S1. Container image specifications for TaxaScope modules.
+
+| Module | Tool version | Database version* | Container image (release tag) | Image digest (SHA256, linux/amd64) |
+| --- | --- | --- | --- | --- |
+| Prokka | 1.14.6 | v1.14.6 | `docker.io/pyx07/prokka:v1-nodb-release` | `sha256:6b0c6e6e8b330858c9764690ead2b9d8a4160109474c2401f6eddf2347fb4e82` |
+| dbCAN | 4.2.0-rc2 | db_v5_2_9-13-2025 | `docker.io/pyx07/dbcan:v5-nodb-release` | `sha256:46e1790f026fa5a33f7d6a65c6c3c437b9122a59c2e46c62e79806db942c2dc7` |
+| BUSCO | 5.8.2 | bacteria_odb12 (2025-05-14) | `docker.io/pyx07/busco:v5-nodb-release` | `sha256:c73e3c9a4b837ed7f216fc024721593ac44290d904d1567bb9582b7984158845` |
+| CheckM2 | 1.1.0 | Zenodo record 14897628 | `docker.io/pyx07/checkm2:v2-nodb-release` | `sha256:c9a9ed455a39d26041b9a8d30edf144c02c7360190be8d06888edfb897c48134` |
+| PhyloPhlAn | 3.0.67 | Zenodo record 4005620 | `docker.io/pyx07/phylophlan:v3-nodb-release` | `sha256:8cc55c91b5a79f2df4dba8be7128e00953bb298569d1c4a4225d599f12191277` |
+| antiSMASH | 8.0.4 | standalone-lite 8.0.4 databases | `docker.io/pyx07/antismash:latest-nodb-release` | `sha256:864038983edb0c19caf45cbfcdf5bb01156da7aafb0ae73a27bbbce7e128234c` |
+
+* External databases are not distributed inside the container images. They are downloaded into the selected working directory through `Download DBs`.
+
+## 6. Input Data
 
 TaxaScope accepts either local files or NCBI accession-based downloads.
 
@@ -151,7 +192,7 @@ Alternatively, place local files directly in the working directory before runnin
 | PhyloPhlAn | `.faa` | Uses protein FASTA. At least five genomes are recommended. |
 | AAI/ANI | `.fasta`, `.fa`, `.fna` | Computes genome similarity and heatmaps. |
 
-## 6. GUI Panels
+## 7. GUI Panels
 
 The main window is organized into three working areas:
 
@@ -165,7 +206,7 @@ The right panel is important for troubleshooting:
 - `Console`: command-line logs from PowerShell, Podman, Docker, and tool wrappers.
 - `Preview`: compatible results including images, SVG files, PDFs, text files, tables, Excel files, and Newick/tree files.
 
-## 7. Complete Analysis Workflow
+## 8. Complete Analysis Workflow
 
 This is the recommended end-to-end workflow for a typical bacterial genome project.
 
@@ -227,7 +268,7 @@ After completion, review:
 - `TaxaScope_Run_Report.md`
 - `TaxaScope_Run_Manifest.json`
 
-## 8. Module Outputs
+## 9. Module Outputs
 
 | Module | Main outputs |
 | --- | --- |
@@ -240,7 +281,7 @@ After completion, review:
 | PhyloPhlAn | `*_phylophlan_results/`, tree files such as `.contree`, `.treefile`, `.tre`, `.nwk`, and optional RAxML bootstrap trees |
 | AAI/ANI | `*_ANI-AAI/`, ANI and AAI tables, heatmap SVG/PNG files |
 
-## 9. Reproducibility Reports
+## 10. Reproducibility Reports
 
 TaxaScope writes structured run metadata for reproducible taxonomy workflows.
 
@@ -269,7 +310,17 @@ Human-readable Markdown summary containing the same provenance information. This
 
 Interactive HTML report aggregating result tables, plots, module outputs, runtime summaries, and a reproducibility section. Timestamped HTML copies may also be created during report generation, while `TaxaScope_Report.html` is the stable latest report name.
 
-## 10. Troubleshooting
+## 11. Exiting TaxaScope
+
+When closing TaxaScope, the software asks whether WSL backends should be shut down.
+
+- Choose `Yes` to run `wsl --shutdown`. This releases memory used by WSL and Podman, but the next TaxaScope startup may take longer because the VM must start again.
+- Choose `No` to close only the GUI. WSL and Podman remain running in the background, which makes the next startup faster.
+- Choose `Cancel` to return to the application.
+
+During a running task, use the red `Stop Current Task` button at the bottom of the GUI if a module becomes unresponsive. This attempts to stop the current process and associated containers.
+
+## 12. Troubleshooting
 
 ### `Env Ready` does not appear
 
@@ -291,11 +342,23 @@ Try a smaller accession batch, for example 5 to 8 genomes. NCBI bundle generatio
 
 Enable `Low Perf Mode`, reduce the number of input genomes, or increase the Podman VM memory allocation through `VM Config`.
 
+### Cannot connect to Podman
+
+This usually means the Podman VM or WSL backend is not running. Reopen TaxaScope, click `VM Config`, or restart the computer. On Windows 10, complete the `Win10 WSL2` setup if the button is shown.
+
+### Disk space is low
+
+Container images and reference databases can be large. Remove unused images with `Uninstall [tool name] (Free Space)` from the relevant module tab, or move old working directories and database folders to external storage.
+
+### The software freezes during analysis
+
+Click `Stop Current Task`. If the GUI cannot recover, close TaxaScope and choose `Yes` when asked to shut down WSL backends.
+
 ### PhyloPhlAn tree files are confusing
 
 TaxaScope may produce several tree outputs. IQ-TREE `.treefile` labels can contain SH-aLRT/UFBoot paired support values, while `.contree` is preferred when bootstrap-only support labels are needed. Optional RAxML bootstrap output may also be exported when the concatenated alignment is available.
 
-## 11. Reviewer-Facing Statement
+## 13. Reviewer-Facing Statement
 
 The following wording can be adapted for manuscript revision or reviewer response:
 
