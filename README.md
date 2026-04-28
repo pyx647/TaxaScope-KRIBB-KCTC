@@ -51,6 +51,7 @@ The TaxaScope graphical user interface provides a file-system–based workflow f
 1. Download the [Latest Release](URL).
 2. Run `TaxaScope.exe`.
 3. Follow the **[Installation Guide](Installation_Guide.md)** to setup the environment.
+4. See the **[TaxaScope User Manual](docs/TaxaScope_User_Manual.md)** for the complete GUI workflow tutorial, Figure 2 guide, output structure, and reproducibility report documentation.
 
 ## 📜 Publication and Citation
 If you use TaxaScope in your research, please cite:
