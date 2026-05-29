@@ -71,6 +71,19 @@ TaxaScope GUI workflow. The workflow is operated as follows:
 
 A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md).
 
+## System Requirements
+
+| Component | Minimum | Recommended |
+| :--- | :--- | :--- |
+| Operating System | Windows 10 64-bit (build 19041+) | **Windows 11 64-bit** |
+| RAM | 16 GB | **64 GB** |
+| CPU | 4-core x86-64 | 16-core x86-64 |
+| Disk | 200 GB free (SSD) | 1 TB free (NVMe SSD) |
+| WSL2 | Required | Required |
+| Container runtime | Podman or Docker Desktop | Podman (rootless) |
+
+> **Note:** 64 GB RAM is strongly recommended when running memory-intensive modules such as CheckM2, BUSCO, and PhyloPhlAn concurrently on large genome sets. Analyses on datasets with more than 50 genomes may be significantly slower or fail on systems with less than 32 GB RAM.
+
 ## Getting Started
 
 1. Download the latest TaxaScope release.
