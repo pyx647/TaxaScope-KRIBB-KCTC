@@ -78,7 +78,7 @@ A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope
 | Operating System | Windows 11 64-bit |
 | RAM | 64 GB |
 | CPU | 16-core x86-64 |
-| Disk | 1 TB free (NVMe SSD) |
+| Disk | 200 GB free (SSD) |
 
 > **Note:** 64 GB RAM is strongly recommended when running memory-intensive modules such as CheckM2, BUSCO, and PhyloPhlAn concurrently on large genome sets. Analyses on datasets with more than 50 genomes may be significantly slower or fail on systems with less than 32 GB RAM.
 
