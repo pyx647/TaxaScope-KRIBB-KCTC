@@ -94,7 +94,7 @@ A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope
 
 If you use TaxaScope in your research, please cite:
 
-> [Author List], TaxaScope: An Integrated Platform for Reproducible Microbial Genome Analysis. *Journal Name* (2025). [DOI]
+> Peng, Y., Jiang, Y., Lee, Y. J., Lee, J. H., Kim, C. Y., & Lee, J. (2026). TaxaScope: a container-native, visualization-centric workstation for genome-based bacterial taxonomy. *Frontiers in Microbiology*, 17, 1809734.
 
 ## License
 
