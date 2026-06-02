@@ -71,6 +71,17 @@ TaxaScope GUI workflow. The workflow is operated as follows:
 
 A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope_User_Manual.md).
 
+## System Requirements
+
+| Component | Recommended |
+| :--- | :--- |
+| Operating System | Windows 11 64-bit |
+| RAM | 64 GB |
+| CPU | 16-core x86-64 |
+| Disk | 200 GB free (SSD) |
+
+> **Note:** 64 GB RAM is strongly recommended when running memory-intensive modules such as CheckM2, BUSCO, and PhyloPhlAn concurrently on large genome sets. Analyses on datasets with more than 50 genomes may be significantly slower or fail on systems with less than 32 GB RAM.
+
 ## Getting Started
 
 1. Download the latest TaxaScope release.
@@ -83,7 +94,7 @@ A complete explanation is provided in the [TaxaScope User Manual](docs/TaxaScope
 
 If you use TaxaScope in your research, please cite:
 
-> [Author List], TaxaScope: An Integrated Platform for Reproducible Microbial Genome Analysis. *Journal Name* (2025). [DOI]
+> Peng, Y., Jiang, Y., Lee, Y. J., Lee, J. H., Kim, C. Y., & Lee, J. (2026). TaxaScope: a container-native, visualization-centric workstation for genome-based bacterial taxonomy. *Frontiers in Microbiology*, 17, 1809734.
 
 ## License
 
